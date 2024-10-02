@@ -11,6 +11,10 @@ const NavBar = () => {
                 <li>Support Us</li>
                 <button>Log In</button>
                 <button>Register</button>
+                <button>Register</button>
+                <button>Register</button>
+                <button>Register</button>
+                <button>Register</button>
             </ul>
 
       </nav>
