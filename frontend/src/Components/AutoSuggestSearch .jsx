@@ -1,21 +1,87 @@
-import React, { useState } from 'react';
-import { FaSearch } from 'react-icons/fa';
+import React, { useState } from "react";
+import { FaSearch } from "react-icons/fa";
+// import { NavLink } from "react-router-dom";
 
 const AutoSuggestSearch = () => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
   // Sample data for suggestions
   const data = [
-    'Bachelor Of Technology',
-    'Masters of Business Administration',
-    'Bachelor Of Commerce',
-    'Bachelor of Computer Application',
-    'Masters of Computer Application',
-    'Doctor of Philosophy',
-    'Master of Science',
-    'Bachelor of Arts',
-    'Master of Social Work',
+    // Bachelor of Technology (B.Tech)
+    "Data Structures and Algorithms",
+    "Database Management Systems",
+    "Operating Systems",
+    "Computer Networks",
+    "Software Engineering",
+    "Circuit Theory",
+    "Digital Electronics",
+    "Control Systems",
+    "Power Systems",
+    "Electromagnetic Fields",
+    "Thermodynamics",
+    "Fluid Mechanics",
+    "Manufacturing Processes",
+    "Machine Design",
+    "Engineering Mechanics",
+
+    // Masters of Business Administration (MBA)
+    "Financial Management",
+    "Investment Analysis",
+    "Corporate Finance",
+    "Financial Accounting",
+    "Risk Management",
+    "Marketing Management",
+    "Consumer Behavior",
+    "Digital Marketing",
+    "Brand Management",
+    "Sales Management",
+    "Organizational Behavior",
+    "Talent Management",
+    "Performance Management",
+    "Labor Laws",
+    "Compensation Management",
+
+    // Bachelor of Commerce (B.Com)
+    "Financial Accounting",
+    "Cost Accounting",
+    "Management Accounting",
+    "Taxation",
+    "Auditing",
+    "Business Law",
+    "Business Economics",
+    "Business Environment",
+    "Entrepreneurship",
+    "E-Commerce",
+    "Financial Management",
+    "Investment Management",
+    "Banking and Insurance",
+    "Corporate Finance",
+    "Financial Markets",
+
+    // Bachelor of Computer Applications (BCA)
+    "C Programming",
+    "Java Programming",
+    "Data Structures",
+    "Web Development",
+    "Software Engineering",
+    "Database Management Systems",
+    "Computer Networks",
+    "Operating Systems",
+    "Mobile App Development",
+    "Cloud Computing",
+
+    // Masters of Computer Applications (MCA)
+    "Advanced Data Structures",
+    "Software Engineering",
+    "Database Management Systems",
+    "Computer Networks",
+    "Operating Systems",
+    "Web Technologies",
+    "Mobile Computing",
+    "Artificial Intelligence",
+    "Machine Learning",
+    "Cloud Computing",
   ];
 
   const handleChange = (event) => {
@@ -39,10 +105,12 @@ const AutoSuggestSearch = () => {
 
   return (
     <div className="relative w-full max-w-md">
+      {/* <NavLink to='/about'> */}
       <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+      {/* </NavLink> */}
       <input
         type="text"
-        placeholder="Search for courses..."
+        placeholder="SEARCH SUBJECT"
         value={query}
         onChange={handleChange}
         className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
