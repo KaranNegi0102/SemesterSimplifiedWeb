@@ -7,18 +7,22 @@ export const UniversitiesList = [
   {
     fullName: "Guru Gobind Singh Indraprastha University",
     logoUrl: ipuLogo,
+    abbreviation: "GGSIPU"
   },
   {
     fullName: "Dr. A.P.J. Abdul Kalam Technical University",
     logoUrl: aktuLogo,
+    abbreviation: "AKTU"
   },
   {
     fullName: "University of Delhi",
     logoUrl: duLogo,
+    abbreviation: "DU"
   },
   {
     fullName: "Indira Gandhi Delhi Technical University for Women",
     logoUrl: igdtuwLogo,
+    abbreviation: "IGDTUW"
   },
   
 ];

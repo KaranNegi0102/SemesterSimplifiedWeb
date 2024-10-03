@@ -18,15 +18,15 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen min-w-full">
+    <div className="flex flex-col min-h-screen w-full">
       {/* Navigation Bar */}
       <NavBar />
 
       {/* Main Content */}
-      <main className="flex-grow container mx-auto px-4 py-8 ">
+      <main>
         {/* Centered Logo and Search Field */}
         <div className="flex flex-col items-center justify-center text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4 drop-shadow-lg ">
+          <h1 className="text-4xl font-bold mb-4 drop-shadow-lg mt-8">
             SEMESTER SIMPLIFIED
           </h1>
           <img
@@ -45,22 +45,23 @@ const HomePage = () => {
         </div>
 
         {/* Universities Listed */}
-        <div className="flex flex-col items-center justify-center w-full bg-[#F5F5F5]">
-          <h2 className="text-2xl font-semibold mb-6 text-center">
+        <div className="flex-col items-center justify-center max-w-full bg-[#F5F5F5]">
+          <h2 className="text-center text-3xl font-bold pt-5">
             Universities Listed
           </h2>
-          {universities.map((university) => (
-            <UniversitiesListed university={university} />
-          ))}
+          <div className="flex flex-row w-full items-center justify-evenly py-5 my-5">
+            {universities.map((university) => (
+              <UniversitiesListed university={university} />
+            ))}
+          </div>
         </div>
 
         {/* Courses Listed */}
-        <div className="w-full bg-[#F5F5F5] p-5">
-          <h2 className="text-2xl font-semibold mb-6 text-center">
+        <div className="flex-col items-center justify-center max-w-full bg-[#F5F5F5]">
+          <h2 className="text-center text-3xl font-bold pt-5">
             Courses Listed
           </h2>
-
-          <div>
+          <div className="flex flex-row w-full items-center justify-evenly py-5 my-5">
             {courses.map((course) => (
               <CoursesListed course={course} />
             ))}
