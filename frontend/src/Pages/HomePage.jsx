@@ -46,21 +46,20 @@ const HomePage = () => {
 
         {/* Universities Listed */}
         <div className="flex-col items-center justify-center max-w-full bg-[#F5F5F5] transition-colors duration-300 hover:bg-[#e5e5e5] overflow-hidden">
-  <h2 className="text-center text-3xl font-bold pt-5">
-    Universities Listed
-  </h2>
-  <div className="flex flex-row w-full items-center justify-evenly py-5 my-5 animate-marquee">
-    {universities.map((university, index) => (
-      <div
-        key={index}
-        className="flex-shrink-0 w-40 mx-5 transform transition-transform duration-500 hover:scale-105"
-      >
-        <UniversitiesListed university={university} />
-      </div>
-    ))}
-  </div>
-</div>
-
+          <h2 className="text-center text-3xl font-bold pt-5">
+            Universities Listed
+          </h2>
+          <div className="flex flex-row w-full items-center justify-evenly py-5 my-5 animate-marquee">
+            {universities.map((university, index) => (
+              <div
+                key={index}
+                className="flex-shrink-0 w-40 mx-5 transform transition-transform duration-500 hover:scale-105"
+              >
+                <UniversitiesListed university={university} />
+              </div>
+            ))}
+          </div>
+        </div>
 
         {/* Courses Listed */}
         <div className="flex-col items-center justify-center max-w-full bg-[#F5F5F5] transition-colors duration-300 hover:bg-[#e5e5e5]">

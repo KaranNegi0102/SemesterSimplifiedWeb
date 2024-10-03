@@ -24,5 +24,20 @@ export const UniversitiesList = [
     logoUrl: igdtuwLogo,
     abbreviation: "IGDTUW"
   },
+  {
+    fullName: "Indira Gandhi Delhi Technical University for Women",
+    logoUrl: igdtuwLogo,
+    abbreviation: "IGDTUW"
+  },
+  {
+    fullName: "Indira Gandhi Delhi Technical University for Women",
+    logoUrl: igdtuwLogo,
+    abbreviation: "IGDTUW"
+  },
+  {
+    fullName: "Indira Gandhi Delhi Technical University for Women",
+    logoUrl: igdtuwLogo,
+    abbreviation: "IGDTUW"
+  },
   
 ];
