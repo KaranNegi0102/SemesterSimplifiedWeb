@@ -69,8 +69,10 @@ const HomePage = () => {
         </div>
       </main>
 
-      {/* Footer */}
-      <Footer />
+      <div className="bg-[#F5F5F5]">
+        {/* Footer */}
+        <Footer />
+      </div>
     </div>
   );
 };
