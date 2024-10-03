@@ -1,96 +1,33 @@
 import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
-// import { NavLink } from "react-router-dom";
+import { data } from "../assets/Suggestions";
 
 const AutoSuggestSearch = () => {
   const [query, setQuery] = useState("");
+  const [selectedCourse, setSelectedCourse] = useState(""); // For storing selected course
   const [suggestions, setSuggestions] = useState([]);
+  const [filteredSubjects, setFilteredSubjects] = useState([]); // For storing filtered subjects based on user input
 
-  // Sample data for suggestions
-  const data = [
-    // Bachelor of Technology (B.Tech)
-    "Data Structures and Algorithms",
-    "Database Management Systems",
-    "Operating Systems",
-    "Computer Networks",
-    "Software Engineering",
-    "Circuit Theory",
-    "Digital Electronics",
-    "Control Systems",
-    "Power Systems",
-    "Electromagnetic Fields",
-    "Thermodynamics",
-    "Fluid Mechanics",
-    "Manufacturing Processes",
-    "Machine Design",
-    "Engineering Mechanics",
+  // Handle course selection
+  const handleCourseChange = (event) => {
+    const selectedCourseValue = event.target.value;
+    setSelectedCourse(selectedCourseValue); // Set the selected course
+    setQuery(""); // Reset the subject search when the course is changed
+    setSuggestions([]); // Clear any existing suggestions
+    setFilteredSubjects(
+      selectedCourseValue ? data.find((item) => item.degree === selectedCourseValue).subjects : []
+    ); // Get subjects related to selected course
+  };
 
-    // Masters of Business Administration (MBA)
-    "Financial Management",
-    "Investment Analysis",
-    "Corporate Finance",
-    "Financial Accounting",
-    "Risk Management",
-    "Marketing Management",
-    "Consumer Behavior",
-    "Digital Marketing",
-    "Brand Management",
-    "Sales Management",
-    "Organizational Behavior",
-    "Talent Management",
-    "Performance Management",
-    "Labor Laws",
-    "Compensation Management",
-
-    // Bachelor of Commerce (B.Com)
-    "Financial Accounting",
-    "Cost Accounting",
-    "Management Accounting",
-    "Taxation",
-    "Auditing",
-    "Business Law",
-    "Business Economics",
-    "Business Environment",
-    "Entrepreneurship",
-    "E-Commerce",
-    "Financial Management",
-    "Investment Management",
-    "Banking and Insurance",
-    "Corporate Finance",
-    "Financial Markets",
-
-    // Bachelor of Computer Applications (BCA)
-    "C Programming",
-    "Java Programming",
-    "Data Structures",
-    "Web Development",
-    "Software Engineering",
-    "Database Management Systems",
-    "Computer Networks",
-    "Operating Systems",
-    "Mobile App Development",
-    "Cloud Computing",
-
-    // Masters of Computer Applications (MCA)
-    "Advanced Data Structures",
-    "Software Engineering",
-    "Database Management Systems",
-    "Computer Networks",
-    "Operating Systems",
-    "Web Technologies",
-    "Mobile Computing",
-    "Artificial Intelligence",
-    "Machine Learning",
-    "Cloud Computing",
-  ];
-
-  const handleChange = (event) => {
+  // Handle subject input change
+  const handleSubjectChange = (event) => {
     const input = event.target.value;
     setQuery(input);
 
-    if (input) {
-      const filteredSuggestions = data.filter((item) =>
-        item.toLowerCase().includes(input.toLowerCase())
+    if (input && selectedCourse) {
+      // Filter subjects based on selected course
+      const filteredSuggestions = filteredSubjects.filter((subject) =>
+        subject.toLowerCase().includes(input.toLowerCase())
       );
       setSuggestions(filteredSuggestions);
     } else {
@@ -98,36 +35,53 @@ const AutoSuggestSearch = () => {
     }
   };
 
+  // Handle suggestion click
   const handleSuggestionClick = (suggestion) => {
     setQuery(suggestion);
     setSuggestions([]); // Clear suggestions after selection
   };
 
   return (
-    <div className="relative w-full max-w-md">
-      {/* <NavLink to='/about'> */}
-      <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-      {/* </NavLink> */}
-      <input
-        type="text"
-        placeholder="SEARCH SUBJECT"
-        value={query}
-        onChange={handleChange}
-        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-      {suggestions.length > 0 && (
-        <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-md shadow-lg mt-1">
-          {suggestions.map((suggestion, index) => (
-            <li
-              key={index}
-              onClick={() => handleSuggestionClick(suggestion)}
-              className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-            >
-              {suggestion}
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className="w-full max-w-md">
+      {/* Course Selection Dropdown */}
+      <select
+        value={selectedCourse}
+        onChange={handleCourseChange}
+        className="w-full pl-4 pr-4 py-2 mb-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        <option value="">Select Course</option>
+        {data.map((course, index) => (
+          <option key={index} value={course.degree}>
+            {course.degree}
+          </option>
+        ))}
+      </select>
+
+      {/* Subject Search Input */}
+      <div className="relative w-full">
+        <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+        <input
+          type="text"
+          placeholder="SEARCH SUBJECT"
+          value={query}
+          onChange={handleSubjectChange}
+          className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+          disabled={!selectedCourse} // Disable if no course is selected
+        />
+        {suggestions.length > 0 && (
+          <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-md shadow-lg mt-1">
+            {suggestions.map((suggestion, index) => (
+              <li
+                key={index}
+                onClick={() => handleSuggestionClick(suggestion)}
+                className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+              >
+                {suggestion}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 };

@@ -20,4 +20,5 @@ export const UniversitiesList = [
     fullName: "Indira Gandhi Delhi Technical University for Women",
     logoUrl: igdtuwLogo,
   },
+  
 ];

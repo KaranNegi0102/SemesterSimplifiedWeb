@@ -7,7 +7,7 @@ const UniversitiesListed = ({ university }) => {
         {/* University Data*/}
         <figure className="flex flex-col items-center bg-white shadow-lg rounded-lg p-4 hover:scale-105 transition-transform">
           <img
-            src={university.image}
+            src={university.logoUrl}
             alt={university.fullName}
             className="h-24 w-24 object-contain mb-4 rounded-full border border-gray-200 p-2"
           />

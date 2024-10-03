@@ -9,14 +9,13 @@ import { UniversitiesList } from "../assets/UniversitiesList";
 import { CoursesList } from "../assets/CoursesList";
 
 const HomePage = () => {
-
   const [universities, setUniversities] = useState([]);
-  const [courses, setCourses] = useState([])
-  
+  const [courses, setCourses] = useState([]);
+
   useEffect(() => {
     setUniversities(UniversitiesList);
-    setCourses(CoursesList)
-  }, [])
+    setCourses(CoursesList);
+  }, []);
 
   return (
     <div className="flex flex-col min-h-screen min-w-full">
@@ -50,11 +49,9 @@ const HomePage = () => {
           <h2 className="text-2xl font-semibold mb-6 text-center">
             Universities Listed
           </h2>
-          {
-            universities.map( (university) => (
-              <UniversitiesListed university={university} />
-            ) )
-          }
+          {universities.map((university) => (
+            <UniversitiesListed university={university} />
+          ))}
         </div>
 
         {/* Courses Listed */}
@@ -62,17 +59,13 @@ const HomePage = () => {
           <h2 className="text-2xl font-semibold mb-6 text-center">
             Courses Listed
           </h2>
-          
+
           <div>
-            {
-              courses.map( (course) => (
-                <CoursesListed course={course} />
-              ) )
-            }
+            {courses.map((course) => (
+              <CoursesListed course={course} />
+            ))}
           </div>
-          
         </div>
-      
       </main>
 
       {/* Footer */}
