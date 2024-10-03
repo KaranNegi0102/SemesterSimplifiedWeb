@@ -5,15 +5,19 @@ const NavBar = () => {
     <div>
       <nav>
         <div>
-          <ul className="flex flex-row items-end justify-end gap-5 bg-[#F5F5F5] text-xl py-4 px-4 m-w-screen shadow-xl">
-            <li>Home</li>
-            <li>About Us</li>
-            <li>Support Us</li>
+          <ul className="flex flex-row items-end justify-end gap-5 bg-[#F5F5F5] text-xl py-4 px-4 m-w-screen shadow-xl transition-all duration-500 ease-in-out">
+            <li className="hover:text-blue-500 transition-all duration-300 ease-in-out cursor-pointer">Home</li>
+            <li className="hover:text-blue-500 transition-all duration-300 ease-in-out cursor-pointer">About Us</li>
+            <li className="hover:text-blue-500 transition-all duration-300 ease-in-out cursor-pointer">Support Us</li>
             <li>
-              <button className="border border-black px-2 py-1 rounded-lg">Log In</button>
+              <button className="border border-black px-2 py-1 rounded-lg transition-transform duration-300 hover:scale-110 hover:bg-gray-200">
+                Log In
+              </button>
             </li>
             <li>
-              <button className="border border-black px-2 py-1 rounded-lg bg-slate-800 text-white">Register</button>
+              <button className="border border-black px-2 py-1 rounded-lg bg-slate-800 text-white transition-transform duration-300 hover:scale-110 hover:bg-slate-700">
+                Register
+              </button>
             </li>
           </ul>
         </div>
@@ -23,8 +27,3 @@ const NavBar = () => {
 };
 
 export default NavBar;
-
-
-// box-shadow: 0px 4px 8px 0px ;
-// #00000040
-// box-shadow: 0px 4px 8px 0px ;

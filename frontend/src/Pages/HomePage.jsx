@@ -23,7 +23,7 @@ const HomePage = () => {
       <NavBar />
 
       {/* Main Content */}
-      <main>
+      <main className="opacity-0 animate-fadeIn">
         {/* Centered Logo and Search Field */}
         <div className="flex flex-col items-center justify-center text-center mb-12">
           <h1 className="text-4xl font-bold mb-4 drop-shadow-lg mt-8">
@@ -32,7 +32,7 @@ const HomePage = () => {
           <img
             src={logo}
             alt="Main Logo"
-            className="h-32 w-32 mb-4 rounded-full"
+            className="h-32 w-32 mb-4 rounded-full transition-transform duration-300 ease-in-out hover:scale-110"
           />
           <p className="text-2xl mb-6 font-semibold">
             Study Easier, Faster, and Better
@@ -40,24 +40,30 @@ const HomePage = () => {
 
           {/* Search Bar with Icon */}
           <div className="relative w-full max-w-md">
-            <AutoSuggestSearch />
+            <AutoSuggestSearch className="transition-all duration-300 ease-in-out focus:ring-2 focus:ring-blue-400 focus:outline-none" />
           </div>
         </div>
 
         {/* Universities Listed */}
-        <div className="flex-col items-center justify-center max-w-full bg-[#F5F5F5]">
-          <h2 className="text-center text-3xl font-bold pt-5">
-            Universities Listed
-          </h2>
-          <div className="flex flex-row w-full items-center justify-evenly py-5 my-5">
-            {universities.map((university) => (
-              <UniversitiesListed university={university} />
-            ))}
-          </div>
-        </div>
+        <div className="flex-col items-center justify-center max-w-full bg-[#F5F5F5] transition-colors duration-300 hover:bg-[#e5e5e5] overflow-hidden">
+  <h2 className="text-center text-3xl font-bold pt-5">
+    Universities Listed
+  </h2>
+  <div className="flex flex-row w-full items-center justify-evenly py-5 my-5 animate-marquee">
+    {universities.map((university, index) => (
+      <div
+        key={index}
+        className="flex-shrink-0 w-40 mx-5 transform transition-transform duration-500 hover:scale-105"
+      >
+        <UniversitiesListed university={university} />
+      </div>
+    ))}
+  </div>
+</div>
+
 
         {/* Courses Listed */}
-        <div className="flex-col items-center justify-center max-w-full bg-[#F5F5F5]">
+        <div className="flex-col items-center justify-center max-w-full bg-[#F5F5F5] transition-colors duration-300 hover:bg-[#e5e5e5]">
           <h2 className="text-center text-3xl font-bold pt-5">
             Courses Listed
           </h2>
