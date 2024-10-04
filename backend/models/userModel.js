@@ -1,14 +1,16 @@
+const mongoose = require('mongoose');  // Import mongoose
+const { Schema } = mongoose;
 
 const userSchema = new Schema(
   {
     name: { type: String, required: true },
-    title: { type: String, required: false },
-    role: { type: String, required: false },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    isAdmin: { type: Boolean, required: true, default: false },
-    tasks: [{ type: Schema.Types.ObjectId, ref: "Task" }],
-    isActive: { type: Boolean, required: true, default: true },
+    university: { type: String, required: true, default: "" },  // Default set to empty string
   },
   { timestamps: true }
 );
+
+const User = mongoose.model("User", userSchema);
+
+module.exports = User;
