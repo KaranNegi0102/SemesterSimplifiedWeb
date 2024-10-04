@@ -3,6 +3,7 @@ import { FaEye, FaEyeSlash, FaLock, FaKey } from "react-icons/fa";
 import { IoPersonSharp } from "react-icons/io5";
 import { IoIosMail } from "react-icons/io";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
 
 const RegisterForm = () => {
   const [showPass, setShowPass] = useState(false);
@@ -13,20 +14,47 @@ const RegisterForm = () => {
     email: "",
     password: "",
     confirmPassword: "",
+    terms: false,
   });
 
   const changeHandler = (event) => {
-    const { name, value } = event.target;
+    const { name, type, checked, value } = event.target;
     setFormData((prevData) => {
       return {
         ...prevData,
-        [name]: value,
+        [name]: type === "checkbox" ? checked : value,
       };
     });
   };
 
-  const submitHandler = (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
+
+    if (!formData.terms) {
+      alert("Accept Terms And Conditions");
+      return;
+    }
+
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/api/v1/user/register",
+        {
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        }
+      );
+      if (res.data.status === "ok") {
+        alert("Registered Successfully");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -144,7 +172,10 @@ const RegisterForm = () => {
         <input
           type="checkbox"
           id="terms"
+          name="terms"
           className="h-4 w-4 text-blue-600 bg-gray-700 border border-gray-600 rounded"
+          checked={formData.terms}
+          onChange={changeHandler}
         />
         <label htmlFor="terms" className="text-black text-sm">
           I agree to all statements in the Terms of Service
