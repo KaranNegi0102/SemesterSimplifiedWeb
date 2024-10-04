@@ -22,13 +22,13 @@ const LoginForm = () => {
   };
 
   const submitHandler = (event) => {
-    event.preventDefault()
-  }
+    event.preventDefault();
+  };
 
   return (
     <form className="bg-[#F5F5F5] p-6 rounded-lg w-full max-w-xl mx-auto">
       <div className="text-left mb-6">
-        <h1 className="text-3xl font-bold text-black">WELCOME WELCOME</h1>
+        <h1 className="text-3xl font-bold text-black">WELCOME</h1>
         <p className="mt-2 text-black text-lg">
           Please Login. Don’t have an account?{" "}
           <NavLink to="/register">
@@ -58,32 +58,28 @@ const LoginForm = () => {
       <div className="mb-4">
         <label
           htmlFor="password"
-          className="block text-lg  text-black font-semibold"
+          className="block text-lg text-black font-semibold"
         >
           Password
         </label>
-        <input
-          type={showPass ? "text" : "password"}
-          name="password"
-          id="password"
-          value={formData.password}
-          placeholder="••••••••"
-          onChange={changeHandler}
-          className="w-full p-2 mt-1 rounded-md bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        {showPass ? (
-          <FaEyeSlash
-            onClick={() => {
-              setShowPass((prev) => !prev);
-            }}
+        <div className="relative">
+          <input
+            type={showPass ? "text" : "password"}
+            name="password"
+            id="password"
+            value={formData.password}
+            placeholder="••••••••"
+            onChange={changeHandler}
+            className="w-full p-2 mt-1 rounded-md bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-        ) : (
-          <FaEye
-            onClick={() => {
-              setShowPass((prev) => !prev);
-            }}
-          />
-        )}
+          <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer">
+            {showPass ? (
+              <FaEyeSlash onClick={() => setShowPass((prev) => !prev)} />
+            ) : (
+              <FaEye onClick={() => setShowPass((prev) => !prev)} />
+            )}
+          </span>
+        </div>
       </div>
 
       <div className="text-center text-black mb-4 font-bold">or</div>
@@ -129,7 +125,10 @@ const LoginForm = () => {
         </NavLink>
       </div>
 
-      <button className="w-full p-3 bg-gray-400 text-white font-semibold rounded-lg hover:bg-blue-700 transition" onClick={submitHandler}>
+      <button
+        className="w-full p-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-700 transition"
+        onClick={submitHandler}
+      >
         Sign in to your account
       </button>
     </form>

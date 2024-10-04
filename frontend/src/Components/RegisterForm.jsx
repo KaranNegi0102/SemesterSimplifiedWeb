@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaEye, FaEyeSlash, FaLock, FaKey } from "react-icons/fa";
 import { IoPersonSharp } from "react-icons/io5";
 import { IoIosMail } from "react-icons/io";
+import { NavLink } from "react-router-dom";
 
 const RegisterForm = () => {
   const [showPass, setShowPass] = useState(false);
@@ -31,16 +32,16 @@ const RegisterForm = () => {
   return (
     <form
       onSubmit={submitHandler}
-      className="bg-gray-800 p-8 rounded-lg max-w-md mx-auto space-y-6"
+      className="bg-[#F5F5F5] p-6 rounded-lg w-full max-w-xl mx-auto space-y-6"
     >
-      <div className="text-3xl font-bold text-white text-center">
-        REGISTER PAGE
+      <div className="text-left mb-6">
+        <h1 className="text-3xl font-bold text-black text-center">REGISTER</h1>
       </div>
 
       <div className="flex flex-col space-y-2">
         <label
           htmlFor="name"
-          className="text-gray-300 text-sm font-semibold flex items-center"
+          className="block text-lg text-black font-semibold flex items-center"
         >
           <IoPersonSharp className="mr-2" />
           Name
@@ -52,14 +53,14 @@ const RegisterForm = () => {
           value={formData.name}
           placeholder="Enter Name"
           onChange={changeHandler}
-          className="p-3 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="p-3 rounded-md bg-white text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
 
       <div className="flex flex-col space-y-2">
         <label
           htmlFor="email"
-          className="text-gray-300 text-sm font-semibold flex items-center"
+          className="block text-lg text-black font-semibold flex items-center"
         >
           <IoIosMail className="mr-2" />
           Email
@@ -71,14 +72,14 @@ const RegisterForm = () => {
           value={formData.email}
           placeholder="Enter Email"
           onChange={changeHandler}
-          className="p-3 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="p-3 rounded-md bg-white text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
 
       <div className="flex flex-col space-y-2">
         <label
           htmlFor="password"
-          className="text-gray-300 text-sm font-semibold flex items-center"
+          className="block text-lg text-black font-semibold flex items-center"
         >
           <FaLock className="mr-2" />
           Password
@@ -91,16 +92,16 @@ const RegisterForm = () => {
             value={formData.password}
             placeholder="••••••••"
             onChange={changeHandler}
-            className="p-3 rounded-md bg-gray-700 text-white border border-gray-600 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="p-3 rounded-md bg-white text-black border border-gray-300 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           {showPass ? (
             <FaEyeSlash
-              className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-400 cursor-pointer"
+              className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-500 cursor-pointer"
               onClick={() => setShowPass((prev) => !prev)}
             />
           ) : (
             <FaEye
-              className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-400 cursor-pointer"
+              className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-500 cursor-pointer"
               onClick={() => setShowPass((prev) => !prev)}
             />
           )}
@@ -110,7 +111,7 @@ const RegisterForm = () => {
       <div className="flex flex-col space-y-2">
         <label
           htmlFor="confirmPassword"
-          className="text-gray-300 text-sm font-semibold flex items-center"
+          className="block text-lg text-black font-semibold flex items-center"
         >
           <FaKey className="mr-2" />
           Confirm Password
@@ -123,16 +124,16 @@ const RegisterForm = () => {
             value={formData.confirmPassword}
             placeholder="••••••••"
             onChange={changeHandler}
-            className="p-3 rounded-md bg-gray-700 text-white border border-gray-600 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="p-3 rounded-md bg-white text-black border border-gray-300 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           {showConfirmPass ? (
             <FaEyeSlash
-              className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-400 cursor-pointer"
+              className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-500 cursor-pointer"
               onClick={() => setShowConfirmPass((prev) => !prev)}
             />
           ) : (
             <FaEye
-              className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-400 cursor-pointer"
+              className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-500 cursor-pointer"
               onClick={() => setShowConfirmPass((prev) => !prev)}
             />
           )}
@@ -145,7 +146,7 @@ const RegisterForm = () => {
           id="terms"
           className="h-4 w-4 text-blue-600 bg-gray-700 border border-gray-600 rounded"
         />
-        <label htmlFor="terms" className="text-gray-300 text-sm">
+        <label htmlFor="terms" className="text-black text-sm">
           I agree to all statements in the Terms of Service
         </label>
       </div>
@@ -157,6 +158,12 @@ const RegisterForm = () => {
         >
           Register
         </button>
+        <p className="text-center text-black">
+          Already Have an Account?{" "}
+          <NavLink to="/login">
+            <span className="text-blue-600">Log In</span>
+          </NavLink>
+        </p>
       </div>
     </form>
   );
