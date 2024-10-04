@@ -6,11 +6,12 @@ const userSchema = new Schema(
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    university: { type: String, required: true, default: "" },  // Default set to empty string
+    university: { type: String, default:"" },  // Required field for university
   },
   { timestamps: true }
 );
 
-const User = mongoose.model("User", userSchema);
+// Create a model from the schema
+const User = mongoose.model("User", userSchema);  // Best practice is to use singular model names
 
 module.exports = User;
