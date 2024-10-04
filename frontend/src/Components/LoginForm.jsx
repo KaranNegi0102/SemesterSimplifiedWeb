@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const LoginForm = () => {
   const [showPass] = useState(false);
@@ -20,13 +21,17 @@ const LoginForm = () => {
     });
   };
 
+  const submitHandler = (event) => {
+    event.preventDefault()
+  }
+
   return (
     <form className="bg-[#F5F5F5] p-6 rounded-lg w-full max-w-xl mx-auto">
       <div className="text-left mb-6">
         <h1 className="text-3xl font-bold text-black">WELCOME WELCOME</h1>
         <p className="mt-2 text-black text-lg">
           Please Login. Don’t have an account?{" "}
-          <NavLink to="/signup">
+          <NavLink to="/register">
             <span className="text-blue-600">Sign up.</span>
           </NavLink>
         </p>
@@ -46,7 +51,7 @@ const LoginForm = () => {
           value={formData.email}
           placeholder="name@company.com"
           onChange={changeHandler}
-          className="w-full p-2 mt-1 rounded-md bg-white text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full p-2 mt-1 rounded-md bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
 
@@ -64,8 +69,21 @@ const LoginForm = () => {
           value={formData.password}
           placeholder="••••••••"
           onChange={changeHandler}
-          className="w-full p-2 mt-1 rounded-md bg-white text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full p-2 mt-1 rounded-md bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
+        {showPass ? (
+          <FaEyeSlash
+            onClick={() => {
+              setShowPass((prev) => !prev);
+            }}
+          />
+        ) : (
+          <FaEye
+            onClick={() => {
+              setShowPass((prev) => !prev);
+            }}
+          />
+        )}
       </div>
 
       <div className="text-center text-black mb-4 font-bold">or</div>
@@ -111,7 +129,7 @@ const LoginForm = () => {
         </NavLink>
       </div>
 
-      <button className="w-full p-3 bg-gray-400 text-white font-semibold rounded-lg hover:bg-blue-700 transition">
+      <button className="w-full p-3 bg-gray-400 text-white font-semibold rounded-lg hover:bg-blue-700 transition" onClick={submitHandler}>
         Sign in to your account
       </button>
     </form>
