@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const LoginForm = () => {
-  const [showPass] = useState(false);
+  const [showPass, setShowPass] = useState(false);
 
   const [formData, setFormData] = useState({
     email: "",
