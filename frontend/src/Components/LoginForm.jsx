@@ -23,7 +23,7 @@ const LoginForm = () => {
   return (
     <form className="bg-[#F5F5F5] p-6 rounded-lg w-full max-w-xl mx-auto">
       <div className="text-left mb-6">
-        <h1 className="text-3xl font-bold text-black">Welcome !</h1>
+        <h1 className="text-3xl font-bold text-black">WELCOME WELCOME</h1>
         <p className="mt-2 text-black text-lg">
           Please Login. Don’t have an account?{" "}
           <NavLink to="/signup">
