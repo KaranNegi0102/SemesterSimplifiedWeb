@@ -4,6 +4,8 @@ import { IoPersonSharp } from "react-icons/io5";
 import { IoIosMail } from "react-icons/io";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
+import { toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 const RegisterForm = () => {
   const [showPass, setShowPass] = useState(false);
@@ -42,7 +44,7 @@ const RegisterForm = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/v1/user/register",
+        "http://localhost:3000/api/v1/user/register",
         {
           name: formData.name,
           email: formData.email,
@@ -50,7 +52,7 @@ const RegisterForm = () => {
         }
       );
       if (res.data.status === "ok") {
-        alert("Registered Successfully");
+        toast.success("User Created")
       }
     } catch (error) {
       console.log(error);

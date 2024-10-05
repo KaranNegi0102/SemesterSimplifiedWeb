@@ -2,8 +2,9 @@ const express = require("express");
 const cors = require("cors");
 const routes = require("./routes/index.js");
 const dbConnection = require("./connections/connection.js");
+require("dotenv").config()
 
-const PORT = 3000;
+const PORT = process.env.PORT;
 
 const app = express();
 app.use(cors());

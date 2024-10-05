@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const dbConnection = () => {
   mongoose
     .connect(
-      "mongodb+srv://anuraggo3l07:semestersimplified@semestersimplified.lcwyu.mongodb.net/SS_Databases"
+      process.env.MONGO_URL
     )
     .then(() => {
       console.log("Connection Successful");
