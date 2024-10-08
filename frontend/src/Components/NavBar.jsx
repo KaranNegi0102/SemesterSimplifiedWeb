@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 const NavBar = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
+
   return (
     <div>
       <nav>
@@ -17,18 +19,24 @@ const NavBar = () => {
               Support Us
             </li>
             <li>
-              <NavLink to="/login">
-                <button className="border border-black px-2 py-1 rounded-lg transition-transform duration-300 hover:scale-110 hover:bg-gray-200">
-                  Log In
-                </button>
-              </NavLink>
+              {loggedIn ? (
+                <button>Profile</button>
+              ) : (
+                <NavLink to="/login">
+                  <button className="border border-black px-2 py-1 rounded-lg transition-transform duration-300 hover:scale-110 hover:bg-gray-200">
+                    Log In
+                  </button>
+                </NavLink>
+              )}
             </li>
             <li>
-              <NavLink to={"/register"}>
-                <button className="border border-black px-2 py-1 rounded-lg bg-slate-800 text-white transition-transform duration-300 hover:scale-110 hover:bg-slate-700">
-                  Register
-                </button>
-              </NavLink>
+              {!loggedIn && (
+                <NavLink to={"/register"}>
+                  <button className="border border-black px-2 py-1 rounded-lg bg-slate-800 text-white transition-transform duration-300 hover:scale-110 hover:bg-slate-700">
+                    Register
+                  </button>
+                </NavLink>
+              )}
             </li>
           </ul>
         </div>

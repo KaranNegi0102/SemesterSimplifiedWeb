@@ -13,7 +13,20 @@ const SubjectPage = () => {
     "Data Structure",
     "Human Values",
   ]);
-  const [dataToRender, setDataToRender] = useState([]);
+  const [dataToRender, setDataToRender] = useState([
+    {
+      title: "Quantum",
+      uploadedBy: "Anurag",
+    },
+    {
+      title: "Notes",
+      uploadedBy: "Negi",
+    },
+    {
+      title: "Previous Year Papers",
+      uploadedBy: "Avaya",
+    },
+  ]);
   const location = useLocation(); // Get current location (including the URL query params)
 
   // Create a new instance of URLSearchParams to work with query parameters
@@ -106,28 +119,25 @@ const SubjectPage = () => {
                     <FaBook size={30} className="text-blue-500 mr-2" />
                     <span>{item}</span>
                   </div>
-                  <span className="text-sm text-gray-500">Icon of Book</span>
+                  {/* <span className="text-sm text-gray-500">Icon of Book</span> */}
                 </div>
               ))}
             </div>
           </div>
 
-          <h3 className="text-lg font-semibold mb-2">Documents and Uploads</h3>
+          <h3 className="text-lg font-semibold mb-2">{`Documents related to "${subject}"`}</h3>
           <div className="space-y-4">
-            {[
-              "Compiler Design",
-              "Web Technology",
-              "Web Design",
-              "Computer Science",
-            ].map((doc, index) => (
+            {dataToRender.map((doc, index) => (
               <div
                 key={index}
                 className="flex items-center p-4 border border-gray-300 rounded-lg shadow hover:bg-gray-100 transition duration-200"
               >
                 <FaBook size={40} className="text-blue-500 mr-4" />
                 <div className="flex flex-col">
-                  <span className="font-medium">{doc}</span>
-                  <span className="text-sm text-gray-500">Uploaded by XYZ</span>
+                  <span className="font-medium">{doc.title}</span>
+                  <span className="text-sm text-gray-500">
+                    {doc.uploadedBy}
+                  </span>
                 </div>
               </div>
             ))}

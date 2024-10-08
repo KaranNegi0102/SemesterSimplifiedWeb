@@ -43,7 +43,7 @@ const AutoSuggestSearch = () => {
   const handleSuggestionClick = (suggestion) => {
     setQuery(suggestion);
     setSuggestions([]);
-    navigate(`/info?course=${selectedCourse}&subject=${encodeURIComponent(suggestion)}`);
+    navigate(`/search?course=${selectedCourse}&subject=${encodeURIComponent(suggestion)}`);
   };
 
   return (
