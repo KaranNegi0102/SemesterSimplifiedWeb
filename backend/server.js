@@ -3,6 +3,24 @@ const cors = require("cors");
 const routes = require("./routes/index.js");
 const dbConnection = require("./connections/connection.js");
 require("dotenv").config()
+const SubjectMaterial = require("./models/subjectMaterialModel.js")
+
+
+//dummy subject material data
+const newMaterial = new SubjectMaterial({
+  title: "Sample Book",
+  description: "Sample Description",
+  course: "B.Tech",
+  subject: "Data Structures and Algorithms",
+  uploadedBy: "6701af3c564d2c2e08697bdf",
+  pdfUrl: "www.pdfurl.com",
+  category: "notes"
+});
+
+// newMaterial.save()
+//   .then(() => console.log("TextBook saved successfully"))
+//   .catch(err => console.error("Error saving TextBook:", err));
+
 
 const PORT = process.env.PORT;
 

@@ -6,7 +6,7 @@ const subjectDocs = new mongoose.Schema(
       type: String,
       required: true,
     },
-    description: { 
+    description: { // Corrected field name
       type: String,
       required: true,
     },
@@ -29,7 +29,11 @@ const subjectDocs = new mongoose.Schema(
     },
     uploadAt: {
       type: Date,
-      default: Date.now, // Correct usage; no parentheses needed
+      default: Date.now,
+    },
+    pdfUrl: { 
+      type: String,
+      required: true, 
     },
   },
   { timestamps: true }
