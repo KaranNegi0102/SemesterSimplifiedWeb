@@ -5,12 +5,11 @@ import { IoIosMail } from "react-icons/io";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 const RegisterForm = () => {
   const [showPass, setShowPass] = useState(false);
   const [showConfirmPass, setShowConfirmPass] = useState(false);
-
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -21,24 +20,22 @@ const RegisterForm = () => {
 
   const changeHandler = (event) => {
     const { name, type, checked, value } = event.target;
-    setFormData((prevData) => {
-      return {
-        ...prevData,
-        [name]: type === "checkbox" ? checked : value,
-      };
-    });
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: type === "checkbox" ? checked : value,
+    }));
   };
 
   const submitHandler = async (event) => {
     event.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match.");
+      toast.error("Passwords do not match.");
       return;
     }
 
     if (!formData.terms) {
-      alert("Accept Terms And Conditions");
+      toast.error("Please accept the Terms and Conditions.");
       return;
     }
 
@@ -52,10 +49,13 @@ const RegisterForm = () => {
         }
       );
       if (res.data.status === "ok") {
-        toast.success("User Created")
+        toast.success("User Created Successfully!");
+      } else {
+        toast.error("Failed to create user.");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      toast.error("An error occurred during registration.");
     }
   };
 
@@ -69,10 +69,7 @@ const RegisterForm = () => {
       </div>
 
       <div className="flex flex-col space-y-2">
-        <label
-          htmlFor="name"
-          className="block text-lg text-black font-semibold flex items-center"
-        >
+        <label htmlFor="name" className=" text-lg text-black font-semibold flex items-center">
           <IoPersonSharp className="mr-2" />
           Name
         </label>
@@ -88,10 +85,7 @@ const RegisterForm = () => {
       </div>
 
       <div className="flex flex-col space-y-2">
-        <label
-          htmlFor="email"
-          className="block text-lg text-black font-semibold flex items-center"
-        >
+        <label htmlFor="email" className=" text-lg text-black font-semibold flex items-center">
           <IoIosMail className="mr-2" />
           Email
         </label>
@@ -107,10 +101,7 @@ const RegisterForm = () => {
       </div>
 
       <div className="flex flex-col space-y-2">
-        <label
-          htmlFor="password"
-          className="block text-lg text-black font-semibold flex items-center"
-        >
+        <label htmlFor="password" className=" text-lg text-black font-semibold flex items-center">
           <FaLock className="mr-2" />
           Password
         </label>
@@ -127,22 +118,19 @@ const RegisterForm = () => {
           {showPass ? (
             <FaEyeSlash
               className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-500 cursor-pointer"
-              onClick={() => setShowPass((prev) => !prev)}
+              onClick={() => setShowPass(false)}
             />
           ) : (
             <FaEye
               className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-500 cursor-pointer"
-              onClick={() => setShowPass((prev) => !prev)}
+              onClick={() => setShowPass(true)}
             />
           )}
         </div>
       </div>
 
       <div className="flex flex-col space-y-2">
-        <label
-          htmlFor="confirmPassword"
-          className="block text-lg text-black font-semibold flex items-center"
-        >
+        <label htmlFor="confirmPassword" className=" text-lg text-black font-semibold flex items-center">
           <FaKey className="mr-2" />
           Confirm Password
         </label>
@@ -159,12 +147,12 @@ const RegisterForm = () => {
           {showConfirmPass ? (
             <FaEyeSlash
               className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-500 cursor-pointer"
-              onClick={() => setShowConfirmPass((prev) => !prev)}
+              onClick={() => setShowConfirmPass(false)}
             />
           ) : (
             <FaEye
               className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-500 cursor-pointer"
-              onClick={() => setShowConfirmPass((prev) => !prev)}
+              onClick={() => setShowConfirmPass(true)}
             />
           )}
         </div>

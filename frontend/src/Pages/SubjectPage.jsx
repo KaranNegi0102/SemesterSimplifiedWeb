@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../Components/NavBar";
 import AutoSuggestSearch from "../Components/AutoSuggestSearch";
-import { useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { UniversitiesList } from "../assets/UniversitiesList";
 import { FaBook } from "react-icons/fa";
 import axios from "axios";
+import { data } from "../assets/Suggestions";
 
 const SubjectPage = () => {
   const [university, setUniversity] = useState("");
   const [typeOfDocs, setTypeOfDocs] = useState("");
-  const [relatedSubjects, setRelatedSubjects] = useState([
-    "Compiler Design",
-    "Data Structure",
-    "Human Values",
-  ]);
+  const [relatedSubjects, setRelatedSubjects] = useState([]);
   const [allData, setAllData] = useState([]); // Store all documents
   const [dataToRender, setDataToRender] = useState([]); // Store filtered documents
   const location = useLocation();
@@ -21,7 +18,10 @@ const SubjectPage = () => {
   const queryParams = new URLSearchParams(location.search);
   const course = queryParams.get("course");
   const subject = queryParams.get("subject");
-  const category = queryParams.get("category") || null;
+  console.log(course);
+  console.log(subject);
+  
+  
 
   // Function to handle filter button click
   const filterButtonHandler = (e) => {
@@ -47,11 +47,9 @@ const SubjectPage = () => {
           params: {
             course: course,
             subject: subject,
-            category: category,
           },
         }
       );
-      console.log(response.data);
       setAllData(response.data); // Store all documents
       setDataToRender(response.data); // Initially render all documents
     } catch (error) {
@@ -59,8 +57,19 @@ const SubjectPage = () => {
     }
   };
 
+  const settingRelatedSubjects = () => {
+    // Filter subjects based on the course/degree
+    const subjects =
+      data.find((item) => item.degree === course)?.subjects || [];
+
+    // Shuffle the array and pick 3 random subjects
+    const shuffledSubjects = subjects.sort(() => 0.5 - Math.random());
+    setRelatedSubjects(shuffledSubjects.slice(0, 3)); // Pick first 3 subjects from shuffled
+  };
+
   useEffect(() => {
     fetchData();
+    settingRelatedSubjects();
   }, [course, subject]);
 
   return (
@@ -99,7 +108,7 @@ const SubjectPage = () => {
             </select>
           </div>
 
-          <h4 className="font-semibold mb-2">Study Choices</h4>
+          <h4 className="font-semibold mb-2">Material Type: </h4>
           <div className="space-y-2">
             {["all", "assignments", "notes", "books", "papers"].map((type) => (
               <button
@@ -126,15 +135,21 @@ const SubjectPage = () => {
             <h3 className="text-lg font-semibold mb-2">Related Subjects</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {relatedSubjects.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between p-4 border border-gray-300 rounded-lg shadow hover:bg-gray-100 transition duration-200"
+                <NavLink
+                  to={`/search?course=${course}&subject=${encodeURIComponent(
+                    item
+                  )}`}
                 >
-                  <div className="flex items-center">
-                    <FaBook size={30} className="text-blue-500 mr-2" />
-                    <span>{item}</span>
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-4 border border-gray-300 rounded-lg shadow hover:bg-gray-100 transition duration-200"
+                  >
+                    <div className="flex items-center">
+                      <FaBook size={30} className="text-blue-500 mr-2" />
+                      <span>{item}</span>
+                    </div>
                   </div>
-                </div>
+                </NavLink>
               ))}
             </div>
           </div>
