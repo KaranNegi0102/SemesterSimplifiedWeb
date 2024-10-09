@@ -13,7 +13,7 @@ const newMaterial = new SubjectMaterial({
   course: "B.Tech",
   subject: "Data Structures and Algorithms",
   uploadedBy: "6701af3c564d2c2e08697bdf",
-  pdfUrl: "www.pdfurl.com",
+  url: "www.pdfurl.com",
   category: "notes"
 });
 

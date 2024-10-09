@@ -6,7 +6,7 @@ const subjectDocs = new mongoose.Schema(
       type: String,
       required: true,
     },
-    description: { // Corrected field name
+    description: {
       type: String,
       required: true,
     },
@@ -23,17 +23,17 @@ const subjectDocs = new mongoose.Schema(
       enum: ["assignments", "notes", "books", "papers"],
       default: "notes",
     },
+    url: {
+      type: String,
+      required: true,
+    },
     uploadedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-    uploadAt: {
+    uploadedAt: {
       type: Date,
       default: Date.now,
-    },
-    pdfUrl: { 
-      type: String,
-      required: true, 
     },
   },
   { timestamps: true }

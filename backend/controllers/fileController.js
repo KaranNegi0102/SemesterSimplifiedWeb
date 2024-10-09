@@ -1,6 +1,4 @@
 const SubjectMaterial = require("../models/subjectMaterialModel");
-const express = require("express");
-const router = express.Router();
 
 const getData = async (req, res) => {
   const { course, subject } = req.query;
@@ -10,7 +8,6 @@ const getData = async (req, res) => {
       "uploadedBy",
       "name"
     ); // Populate with user name
-    
 
     // Step 2: Map the result to replace uploadedBy with user name
     const responseData = data.map((doc) => {
@@ -28,6 +25,33 @@ const getData = async (req, res) => {
   }
 };
 
-router.get("/getDocs", getData);
+const uploadFile = async (req, res) => {
+  const { title, description, course, subject, category, uploadedBy, url } =
+    req.body;
 
-module.exports = router;
+  try {
+    const newDoc = SubjectMaterial.create({
+      title,
+      description,
+      course,
+      subject,
+      category,
+      uploadedBy: "6701af3c564d2c2e08697bdf",
+      url,
+    });
+
+    res.status(200).json({
+      status: "success",
+      message: "File information saved successfully!",
+      data: newDoc
+    });
+  } catch (error) {
+    console.error("Error saving document:", error);
+    res.status(500).json({
+      status: "error",
+      message: "An error occurred while saving the document.",
+    });
+  }
+};
+
+module.exports = { getData, uploadFile };

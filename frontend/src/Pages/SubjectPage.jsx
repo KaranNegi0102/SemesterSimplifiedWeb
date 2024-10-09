@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../Components/NavBar";
 import AutoSuggestSearch from "../Components/AutoSuggestSearch";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { UniversitiesList } from "../assets/UniversitiesList";
 import { FaBook } from "react-icons/fa";
 import axios from "axios";
@@ -11,6 +11,7 @@ const SubjectPage = () => {
   const [university, setUniversity] = useState("");
   const [typeOfDocs, setTypeOfDocs] = useState("");
   const [relatedSubjects, setRelatedSubjects] = useState([]);
+  const [mostSearchedSubs, setMostSearchedSubs] = useState([]);
   const [allData, setAllData] = useState([]); // Store all documents
   const [dataToRender, setDataToRender] = useState([]); // Store filtered documents
   const location = useLocation();
@@ -18,15 +19,11 @@ const SubjectPage = () => {
   const queryParams = new URLSearchParams(location.search);
   const course = queryParams.get("course");
   const subject = queryParams.get("subject");
-  console.log(course);
-  console.log(subject);
-  
-  
 
   // Function to handle filter button click
   const filterButtonHandler = (e) => {
     const selectedCategory = e.target.value;
-    setTypeOfDocs(selectedCategory); // Set the selected category to state
+    // setTypeOfDocs(selectedCategory); // Set the selected category to state
 
     // Filter the data based on the selected category
     const filteredData =
@@ -42,7 +39,7 @@ const SubjectPage = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/v1/search/getDocs",
+        "http://localhost:5000/api/v1/documents/search",
         {
           params: {
             course: course,
@@ -67,9 +64,15 @@ const SubjectPage = () => {
     setRelatedSubjects(shuffledSubjects.slice(0, 3)); // Pick first 3 subjects from shuffled
   };
 
+  const searchedSubsList = () => {
+    const list = data.find((item) => item.degree === course)?.subjects || [];
+    setMostSearchedSubs(list.slice(0, 3));
+  };
+
   useEffect(() => {
     fetchData();
     settingRelatedSubjects();
+    searchedSubsList();
   }, [course, subject]);
 
   return (
@@ -117,16 +120,22 @@ const SubjectPage = () => {
                 value={type}
                 className="w-full p-2 text-left bg-gray-100 rounded-lg hover:bg-gray-200 transition duration-200"
               >
-                {type.charAt(0).toUpperCase() + type.slice(1).replace(/s$/, "")}
+                {type.charAt(0).toUpperCase() + type.slice(1)}
               </button>
             ))}
           </div>
 
           <h4 className="font-semibold mt-4 mb-2">Most Searched Subjects</h4>
           <ul className="list-disc list-inside space-y-1">
-            <li>Data Structures and Algorithms</li>
-            <li>Computer Networks</li>
-            <li>Compiler Design</li>
+            {mostSearchedSubs.map((item) => (
+              <NavLink
+                to={`/search?course=${course}&subject=${encodeURIComponent(
+                  item
+                )}`}
+              >
+                <li>{item}</li>
+              </NavLink>
+            ))}
           </ul>
         </div>
 
