@@ -10,6 +10,11 @@ const userSchema = new Schema(
     materialUploaded: [
       { type: mongoose.Schema.Types.ObjectId, ref: "SubjectMaterial" },
     ],
+    role: {
+      type: String,
+      enum: ["student", "admin"],
+      required: true,
+    },
   },
   { timestamps: true }
 );

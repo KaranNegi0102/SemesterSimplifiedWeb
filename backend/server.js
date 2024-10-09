@@ -4,6 +4,7 @@ const routes = require("./routes/index.js");
 const dbConnection = require("./connections/connection.js");
 require("dotenv").config()
 const SubjectMaterial = require("./models/subjectMaterialModel.js")
+const cookieParser = require("cookie-parser")
 
 
 //dummy subject material data
@@ -18,16 +19,17 @@ const newMaterial = new SubjectMaterial({
 });
 
 // newMaterial.save()
-//   .then(() => console.log("TextBook saved successfully"))
-//   .catch(err => console.error("Error saving TextBook:", err));
-
 
 const PORT = process.env.PORT;
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: true,
+  credentials:true
+}));
 
 app.use(express.json());
+app.use(cookieParser());
 
 dbConnection();
 

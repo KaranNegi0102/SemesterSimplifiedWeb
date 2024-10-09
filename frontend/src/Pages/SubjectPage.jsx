@@ -9,7 +9,6 @@ import { data } from "../assets/Suggestions";
 
 const SubjectPage = () => {
   const [university, setUniversity] = useState("");
-  const [typeOfDocs, setTypeOfDocs] = useState("");
   const [relatedSubjects, setRelatedSubjects] = useState([]);
   const [mostSearchedSubs, setMostSearchedSubs] = useState([]);
   const [allData, setAllData] = useState([]); // Store all documents
@@ -23,16 +22,12 @@ const SubjectPage = () => {
   // Function to handle filter button click
   const filterButtonHandler = (e) => {
     const selectedCategory = e.target.value;
-    // setTypeOfDocs(selectedCategory); // Set the selected category to state
-
-    // Filter the data based on the selected category
     const filteredData =
       selectedCategory === "all"
-        ? allData // Show all documents if "All" is selected
+        ? allData
         : allData.filter((doc) => doc.category === selectedCategory);
 
     setDataToRender(filteredData);
-    console.log("Filtered category:", selectedCategory);
   };
 
   // Fetch data from backend
@@ -41,12 +36,14 @@ const SubjectPage = () => {
       const response = await axios.get(
         "http://localhost:5000/api/v1/documents/search",
         {
-          params: {
-            course: course,
-            subject: subject,
-          },
+          params: { course, subject },
+          withCredentials: true
         }
       );
+
+      console.log(response.data);
+      
+
       setAllData(response.data); // Store all documents
       setDataToRender(response.data); // Initially render all documents
     } catch (error) {
@@ -55,11 +52,8 @@ const SubjectPage = () => {
   };
 
   const settingRelatedSubjects = () => {
-    // Filter subjects based on the course/degree
     const subjects =
       data.find((item) => item.degree === course)?.subjects || [];
-
-    // Shuffle the array and pick 3 random subjects
     const shuffledSubjects = subjects.sort(() => 0.5 - Math.random());
     setRelatedSubjects(shuffledSubjects.slice(0, 3)); // Pick first 3 subjects from shuffled
   };
@@ -111,7 +105,7 @@ const SubjectPage = () => {
             </select>
           </div>
 
-          <h4 className="font-semibold mb-2">Material Type: </h4>
+          <h4 className="font-semibold mb-2">Material Type:</h4>
           <div className="space-y-2">
             {["all", "assignments", "notes", "books", "papers"].map((type) => (
               <button
@@ -127,11 +121,10 @@ const SubjectPage = () => {
 
           <h4 className="font-semibold mt-4 mb-2">Most Searched Subjects</h4>
           <ul className="list-disc list-inside space-y-1">
-            {mostSearchedSubs.map((item) => (
+            {mostSearchedSubs.map((item, index) => (
               <NavLink
-                to={`/search?course=${course}&subject=${encodeURIComponent(
-                  item
-                )}`}
+                key={index}
+                to={`/search?course=${course}&subject=${encodeURIComponent(item)}`}
               >
                 <li>{item}</li>
               </NavLink>
@@ -145,14 +138,10 @@ const SubjectPage = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {relatedSubjects.map((item, index) => (
                 <NavLink
-                  to={`/search?course=${course}&subject=${encodeURIComponent(
-                    item
-                  )}`}
+                  key={index}
+                  to={`/search?course=${course}&subject=${encodeURIComponent(item)}`}
                 >
-                  <div
-                    key={index}
-                    className="flex items-center justify-between p-4 border border-gray-300 rounded-lg shadow hover:bg-gray-100 transition duration-200"
-                  >
+                  <div className="flex items-center justify-between p-4 border border-gray-300 rounded-lg shadow hover:bg-gray-100 transition duration-200">
                     <div className="flex items-center">
                       <FaBook size={30} className="text-blue-500 mr-2" />
                       <span>{item}</span>
@@ -174,9 +163,7 @@ const SubjectPage = () => {
                   <FaBook size={40} className="text-blue-500 mr-4" />
                   <div className="flex flex-col">
                     <span className="font-medium">{doc.title}</span>
-                    <span className="text-sm text-gray-500">
-                      {doc.uploadedBy}
-                    </span>
+                    <span className="text-sm text-gray-500">{doc.uploadedBy}</span>
                   </div>
                 </div>
               ))

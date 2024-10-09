@@ -59,20 +59,21 @@ const UploadPage = () => {
         {
           ...formData,
           url: downloadURL,
-        }
+        },
+        { withCredentials: true }
       );
 
       if (res.data.status === "success") {
         toast.success("File uploaded successfully!");
-        setFile(null); // Clear the file input
-        setFormData({
-          title: "",
-          description: "",
-          course: "",
-          subject: "",
-          category: "select",
-          uploadedBy: "",
-        });
+        // setFile(null); // Clear the file input
+        // setFormData({
+        //   title: "",
+        //   description: "",
+        //   course: "",
+        //   subject: "",
+        //   category: "select",
+        //   uploadedBy: "",
+        // });
       } else {
         toast.error("Failed to save file information.");
       }
@@ -97,7 +98,10 @@ const UploadPage = () => {
         </div>
 
         <div className="flex flex-col space-y-2">
-          <label htmlFor="title" className="block text-lg text-black font-semibold">
+          <label
+            htmlFor="title"
+            className="block text-lg text-black font-semibold"
+          >
             Title
           </label>
           <input
@@ -113,7 +117,10 @@ const UploadPage = () => {
         </div>
 
         <div className="flex flex-col space-y-2">
-          <label htmlFor="description" className="block text-lg text-black font-semibold">
+          <label
+            htmlFor="description"
+            className="block text-lg text-black font-semibold"
+          >
             Description
           </label>
           <textarea
@@ -128,7 +135,10 @@ const UploadPage = () => {
         </div>
 
         <div className="flex flex-col space-y-2">
-          <label htmlFor="course" className="block text-lg text-black font-semibold">
+          <label
+            htmlFor="course"
+            className="block text-lg text-black font-semibold"
+          >
             Course
           </label>
           <select
@@ -149,7 +159,10 @@ const UploadPage = () => {
         </div>
 
         <div className="flex flex-col space-y-2">
-          <label htmlFor="subject" className="block text-lg text-black font-semibold">
+          <label
+            htmlFor="subject"
+            className="block text-lg text-black font-semibold"
+          >
             Subject
           </label>
           <select
@@ -171,7 +184,10 @@ const UploadPage = () => {
         </div>
 
         <div className="flex flex-col space-y-2">
-          <label htmlFor="category" className="block text-lg text-black font-semibold">
+          <label
+            htmlFor="category"
+            className="block text-lg text-black font-semibold"
+          >
             Category
           </label>
           <select
@@ -190,7 +206,7 @@ const UploadPage = () => {
           </select>
         </div>
 
-        <div className="flex flex-col space-y-2">
+        {/* <div className="flex flex-col space-y-2">
           <label htmlFor="uploadedBy" className="block text-lg text-black font-semibold">
             Uploaded By
           </label>
@@ -204,10 +220,13 @@ const UploadPage = () => {
             className="p-3 rounded-md bg-white text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
-        </div>
+        </div> */}
 
         <div className="flex flex-col space-y-2">
-          <label htmlFor="pdf" className="block text-lg text-black font-semibold">
+          <label
+            htmlFor="pdf"
+            className="block text-lg text-black font-semibold"
+          >
             PDF File
           </label>
           <input
@@ -225,7 +244,9 @@ const UploadPage = () => {
           <button
             type="submit"
             disabled={uploading}
-            className={`w-full bg-blue-600 text-white font-semibold py-3 rounded-md transition-colors duration-200 ${uploading ? "bg-gray-400 cursor-not-allowed" : "hover:bg-blue-700"}`}
+            className={`w-full bg-blue-600 text-white font-semibold py-3 rounded-md transition-colors duration-200 ${
+              uploading ? "bg-gray-400 cursor-not-allowed" : "hover:bg-blue-700"
+            }`}
           >
             {uploading ? "Uploading..." : "Submit"}
           </button>

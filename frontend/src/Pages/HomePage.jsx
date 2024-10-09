@@ -11,16 +11,22 @@ import { CoursesList } from "../assets/CoursesList";
 const HomePage = () => {
   const [universities, setUniversities] = useState([]);
   const [courses, setCourses] = useState([]);
+  const [isLogin ,setIsLogin] = useState(false)
+
+  const authenticateToken = async (req,res) => {
+    
+  }
 
   useEffect(() => {
     setUniversities(UniversitiesList);
+    authenticateToken();
     setCourses(CoursesList);
   }, []);
 
   return (
     <div className="flex flex-col min-h-screen w-full">
       {/* Navigation Bar */}
-      <NavBar />
+      <NavBar isLogin={isLogin}/>
 
       {/* Main Content */}
       <main className="opacity-0 animate-fadeIn">
@@ -67,8 +73,8 @@ const HomePage = () => {
             Courses Listed
           </h2>
           <div className="flex flex-row w-full items-center justify-evenly py-5 my-5">
-            {courses.map((course) => (
-              <CoursesListed course={course} />
+            {courses.map((course, index) => (
+              <CoursesListed key={index} course={course} />
             ))}
           </div>
         </div>

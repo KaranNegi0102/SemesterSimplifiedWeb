@@ -9,6 +9,9 @@ const getData = async (req, res) => {
       "name"
     ); // Populate with user name
 
+    console.log(data);
+    
+
     // Step 2: Map the result to replace uploadedBy with user name
     const responseData = data.map((doc) => {
       return {
@@ -26,25 +29,34 @@ const getData = async (req, res) => {
 };
 
 const uploadFile = async (req, res) => {
-  const { title, description, course, subject, category, uploadedBy, url } =
+  const { title, description, course, subject, category, url } =
     req.body;
 
+  const user = req.user;
+
+//   console.log("user:", user);
+
   try {
-    const newDoc = SubjectMaterial.create({
+    const newDoc = await SubjectMaterial.create({
       title,
       description,
       course,
       subject,
       category,
-      uploadedBy: "6701af3c564d2c2e08697bdf",
+      uploadedBy: user.id,
       url,
     });
 
-    res.status(200).json({
-      status: "success",
-      message: "File information saved successfully!",
-      data: newDoc
-    });
+    console.log("new doc saved:", newDoc);
+    
+
+    if (newDoc) {
+      res.status(200).json({
+        status: "success",
+        message: "File information saved successfully!",
+        data: newDoc,
+      });
+    }
   } catch (error) {
     console.error("Error saving document:", error);
     res.status(500).json({

@@ -4,8 +4,8 @@ import { IoPersonSharp } from "react-icons/io5";
 import { IoIosMail } from "react-icons/io";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const RegisterForm = () => {
   const [showPass, setShowPass] = useState(false);
@@ -41,7 +41,7 @@ const RegisterForm = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/v1/user/register",
+        "http://localhost:5000/api/v1/user/register",
         {
           name: formData.name,
           email: formData.email,
@@ -50,6 +50,14 @@ const RegisterForm = () => {
       );
       if (res.data.status === "ok") {
         toast.success("User Created Successfully!");
+        console.log(res.data.user);
+        setFormData({
+          name: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+          terms: false,
+        });
       } else {
         toast.error("Failed to create user.");
       }
@@ -69,7 +77,10 @@ const RegisterForm = () => {
       </div>
 
       <div className="flex flex-col space-y-2">
-        <label htmlFor="name" className=" text-lg text-black font-semibold flex items-center">
+        <label
+          htmlFor="name"
+          className=" text-lg text-black font-semibold flex items-center"
+        >
           <IoPersonSharp className="mr-2" />
           Name
         </label>
@@ -85,7 +96,10 @@ const RegisterForm = () => {
       </div>
 
       <div className="flex flex-col space-y-2">
-        <label htmlFor="email" className=" text-lg text-black font-semibold flex items-center">
+        <label
+          htmlFor="email"
+          className=" text-lg text-black font-semibold flex items-center"
+        >
           <IoIosMail className="mr-2" />
           Email
         </label>
@@ -101,7 +115,10 @@ const RegisterForm = () => {
       </div>
 
       <div className="flex flex-col space-y-2">
-        <label htmlFor="password" className=" text-lg text-black font-semibold flex items-center">
+        <label
+          htmlFor="password"
+          className=" text-lg text-black font-semibold flex items-center"
+        >
           <FaLock className="mr-2" />
           Password
         </label>
@@ -130,7 +147,10 @@ const RegisterForm = () => {
       </div>
 
       <div className="flex flex-col space-y-2">
-        <label htmlFor="confirmPassword" className=" text-lg text-black font-semibold flex items-center">
+        <label
+          htmlFor="confirmPassword"
+          className=" text-lg text-black font-semibold flex items-center"
+        >
           <FaKey className="mr-2" />
           Confirm Password
         </label>
