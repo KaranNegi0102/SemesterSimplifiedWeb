@@ -7,26 +7,33 @@ import CoursesListed from "../Components/CoursesListed";
 import { useEffect, useState } from "react";
 import { UniversitiesList } from "../assets/UniversitiesList";
 import { CoursesList } from "../assets/CoursesList";
+import Cookies from "js-cookie";
 
 const HomePage = () => {
   const [universities, setUniversities] = useState([]);
   const [courses, setCourses] = useState([]);
-  const [isLogin ,setIsLogin] = useState(false)
+  const [isLogin, setIsLogin] = useState(false);
 
-  const authenticateToken = async (req,res) => {
-    
+  function getCookie() {
+    const token = Cookies.get("token"); // Replace "token" with your cookie name
+    if(token){
+      setIsLogin(false);
+    }
+    else{
+      setIsLogin(false)
+    }
   }
 
   useEffect(() => {
     setUniversities(UniversitiesList);
-    authenticateToken();
+    getCookie();
     setCourses(CoursesList);
-  }, []);
+  }, [isLogin]);
 
   return (
     <div className="flex flex-col min-h-screen w-full">
       {/* Navigation Bar */}
-      <NavBar isLogin={isLogin}/>
+      <NavBar isLogin={isLogin} />
 
       {/* Main Content */}
       <main className="opacity-0 animate-fadeIn">

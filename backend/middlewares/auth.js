@@ -4,9 +4,6 @@ require("dotenv").config();
 exports.authentication = async (req, res, next) => {
   const token = req.cookies.token;
 
-    console.log("token:", token);
-    
-
   // Check if the token is present
   if (!token) {
     return res.status(401).json({

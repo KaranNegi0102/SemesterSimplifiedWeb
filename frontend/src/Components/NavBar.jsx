@@ -1,8 +1,25 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom"; // Import useNavigate
+import Cookies from "js-cookie";
 
 const NavBar = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  useEffect(() => {
+    const token = Cookies.get("token");
+    if (token) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    Cookies.remove("token"); // Remove the token cookie
+    setIsLogin(false); // Update the login state
+    navigate("/"); // Redirect to home page after logging out
+  };
 
   return (
     <nav className="bg-[#F5F5F5] shadow-xl">
@@ -16,25 +33,41 @@ const NavBar = () => {
         <li className="hover:text-blue-500 transition-all duration-300 ease-in-out cursor-pointer">
           <NavLink to="/support">Support Us</NavLink>
         </li>
-        <li>
-          {loggedIn ? (
-            <button>Profile</button>
-          ) : (
-            <NavLink to="/login">
-              <button className="border border-black px-2 py-1 rounded-lg transition-transform duration-300 hover:scale-110 hover:bg-gray-200">
-                Log In
+        {isLogin ? (
+          <>
+            <li>
+              <NavLink to="/profile">
+                <button className="border border-black px-2 py-1 rounded-lg transition-transform duration-300 hover:scale-110 hover:bg-gray-200">
+                  Profile
+                </button>
+              </NavLink>
+            </li>
+            <li>
+              <button
+                onClick={handleLogout}
+                className="border border-black px-2 py-1 rounded-lg bg-red-500 text-white transition-transform duration-300 hover:scale-110 hover:bg-red-600"
+              >
+                Log Out
               </button>
-            </NavLink>
-          )}
-        </li>
-        {!loggedIn && (
-          <li>
-            <NavLink to="/register">
-              <button className="border border-black px-2 py-1 rounded-lg bg-slate-800 text-white transition-transform duration-300 hover:scale-110 hover:bg-slate-700">
-                Register
-              </button>
-            </NavLink>
-          </li>
+            </li>
+          </>
+        ) : (
+          <>
+            <li>
+              <NavLink to="/login">
+                <button className="border border-black px-2 py-1 rounded-lg transition-transform duration-300 hover:scale-110 hover:bg-gray-200">
+                  Log In
+                </button>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/register">
+                <button className="border border-black px-2 py-1 rounded-lg bg-slate-800 text-white transition-transform duration-300 hover:scale-110 hover:bg-slate-700">
+                  Register
+                </button>
+              </NavLink>
+            </li>
+          </>
         )}
       </ul>
     </nav>

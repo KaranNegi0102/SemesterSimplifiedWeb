@@ -1,4 +1,5 @@
 const SubjectMaterial = require("../models/subjectMaterialModel");
+const User = require("../models/userModel");
 
 const getData = async (req, res) => {
   const { course, subject } = req.query;
@@ -10,7 +11,6 @@ const getData = async (req, res) => {
     ); // Populate with user name
 
     console.log(data);
-    
 
     // Step 2: Map the result to replace uploadedBy with user name
     const responseData = data.map((doc) => {
@@ -29,12 +29,11 @@ const getData = async (req, res) => {
 };
 
 const uploadFile = async (req, res) => {
-  const { title, description, course, subject, category, url } =
-    req.body;
+  const { title, description, course, subject, category, url } = req.body;
 
-  const user = req.user;
+  const userFromToken = req.user;
 
-//   console.log("user:", user);
+  //   console.log("user:", user);
 
   try {
     const newDoc = await SubjectMaterial.create({
@@ -43,12 +42,15 @@ const uploadFile = async (req, res) => {
       course,
       subject,
       category,
-      uploadedBy: user.id,
+      uploadedBy: userFromToken.id,
       url,
     });
 
-    console.log("new doc saved:", newDoc);
-    
+    const user = await User.findByIdAndUpdate(
+      userFromToken.id,
+      { $push: { materialUploaded: newDoc._id } },
+      { new: true }
+    );
 
     if (newDoc) {
       res.status(200).json({
