@@ -7,8 +7,6 @@ require("dotenv").config();
 const registerUser = async (req, res) => {
   const { name, email, password, university, role } = req.body;
 
-  console.log("Registering user:", name);
-
   try {
     // Check if the user already exists
     const existingUser = await User.findOne({ email });
@@ -48,7 +46,8 @@ const registerUser = async (req, res) => {
         role: user.role,
       },
     });
-  } catch (error) {
+  } 
+  catch (error) {
     console.error("Error while registering:", error);
     res.status(500).json({
       message: "Error while registering.",
@@ -75,7 +74,7 @@ const loginUser = async (req, res) => {
         id: user._id,
       };
 
-      console.log("payload of jwt token:", payload);
+      // console.log("payload of jwt token:", payload);
 
       const token = jwt.sign(payload, process.env.JWT_SECRET, {
         expiresIn: rememberMe ? "7d" : "1h", // Token expiry based on "Remember Me"
@@ -87,7 +86,8 @@ const loginUser = async (req, res) => {
         ), // 7 days or 1 hour
       };
 
-      res.cookie("token", token, options);
+      res.cookie("userToken", token, options);
+      res.cookie("userid", user.id, options);
       res.status(200).json({ status: "ok", message: "Login successful." });
     } else {
       res.status(401).json({ message: "Incorrect password." });
@@ -98,4 +98,69 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, loginUser };
+const getUserInfo = async (req, res) => {
+  const userID = req.user.id;
+
+  try {
+    const user = await User.findById(userID);
+
+    res.json({
+      status: "ok",
+      user: {
+        name: user.name,
+        email: user.email,
+        university: user.university,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const updateUser = async (req, res) => {
+  const userID = req.user.id;
+  const { name, email, password, university } = req.body;
+
+  try {
+    // Find the user by ID first
+    const user = await User.findById(userID);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Hash the password only if it's provided
+    let hashedPass = user.password; // Keep the existing password if none is provided
+    if (password) {
+      hashedPass = await bcrypt.hash(password, 10);
+    }
+
+    // Update the user's information
+    const updatedUser = await User.findByIdAndUpdate(
+      userID,
+      {
+        name,
+        email,
+        password: hashedPass,
+        university,
+      },
+      { new: true } // Return the updated user object
+    );
+
+    // Send a success response with the updated user (exclude password)
+    res.json({
+      message: "User updated successfully",
+      user: {
+        name: updatedUser.name,
+        email: updatedUser.email,
+        university: updatedUser.university,
+      },
+    });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+module.exports = { registerUser, loginUser, getUserInfo, updateUser };

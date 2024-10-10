@@ -8,9 +8,7 @@ const getData = async (req, res) => {
     const data = await SubjectMaterial.find({ course, subject }).populate(
       "uploadedBy",
       "name"
-    ); // Populate with user name
-
-    console.log(data);
+    );
 
     // Step 2: Map the result to replace uploadedBy with user name
     const responseData = data.map((doc) => {
@@ -29,7 +27,8 @@ const getData = async (req, res) => {
 };
 
 const uploadFile = async (req, res) => {
-  const { title, description, course, subject, category, url } = req.body;
+  const { title, description, course, subject, category, university, url } =
+    req.body;
 
   const userFromToken = req.user;
 
@@ -44,6 +43,7 @@ const uploadFile = async (req, res) => {
       category,
       uploadedBy: userFromToken.id,
       url,
+      university,
     });
 
     const user = await User.findByIdAndUpdate(

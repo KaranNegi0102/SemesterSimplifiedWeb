@@ -32,6 +32,10 @@ const subjectDocs = new mongoose.Schema(
       ref: "User",
       required:true
     },
+    university:{
+      type:String,
+      required:true
+    },
     uploadedAt: {
       type: Date,
       default: Date.now,

@@ -4,6 +4,7 @@ import LoginPage from "./Pages/LoginPage";
 import RegisterPage from "./Pages/RegisterPage";
 import SubjectPage from "./Pages/SubjectPage";
 import UploadPage from "./Pages/UploadPage";
+import ProfilePage from "./Pages/ProfilePage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/search" element={<SubjectPage />}/>
         <Route path="/upload" element={<UploadPage />}/>
+        <Route path="/profile" element={<ProfilePage />}/>
       </Routes>
     </div>
   );

@@ -6,9 +6,11 @@ const NavBar = () => {
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate(); // Initialize useNavigate
 
+  const userID = Cookies.get("userid")
+
   useEffect(() => {
-    const token = Cookies.get("token");
-    if (token) {
+    const userToken = Cookies.get("userToken");
+    if (userToken) {
       setIsLogin(true);
     } else {
       setIsLogin(false);
@@ -16,7 +18,8 @@ const NavBar = () => {
   }, []);
 
   const handleLogout = () => {
-    Cookies.remove("token"); // Remove the token cookie
+    Cookies.remove("userToken"); // Remove the token cookie
+    Cookies.remove("userid")
     setIsLogin(false); // Update the login state
     navigate("/"); // Redirect to home page after logging out
   };
@@ -36,7 +39,7 @@ const NavBar = () => {
         {isLogin ? (
           <>
             <li>
-              <NavLink to="/profile">
+              <NavLink to={`/profile?user=${userID}`}>
                 <button className="border border-black px-2 py-1 rounded-lg transition-transform duration-300 hover:scale-110 hover:bg-gray-200">
                   Profile
                 </button>

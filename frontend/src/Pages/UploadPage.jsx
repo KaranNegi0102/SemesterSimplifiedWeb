@@ -5,6 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { data } from "../assets/Suggestions"; // Import your degree and subjects data
+import { UniversitiesList } from "../assets/UniversitiesList";
 
 const UploadPage = () => {
   const [file, setFile] = useState(null);
@@ -18,6 +19,7 @@ const UploadPage = () => {
     subject: "", // The selected subject
     category: "select", // Default value
     uploadedBy: "",
+    university: "",
   });
 
   // State to store subjects based on selected course
@@ -65,15 +67,17 @@ const UploadPage = () => {
 
       if (res.data.status === "success") {
         toast.success("File uploaded successfully!");
-        // setFile(null); // Clear the file input
-        // setFormData({
-        //   title: "",
-        //   description: "",
-        //   course: "",
-        //   subject: "",
-        //   category: "select",
-        //   uploadedBy: "",
-        // });
+        setFile(null); // Clear the file input
+        setFormData({
+          title: "",
+          description: "",
+          course: "",
+          subject: "",
+          category: "select",
+          uploadedBy: "",
+          university: "",
+        });
+        // navigate('/myUploads')
       } else {
         toast.error("Failed to save file information.");
       }
@@ -206,21 +210,29 @@ const UploadPage = () => {
           </select>
         </div>
 
-        {/* <div className="flex flex-col space-y-2">
-          <label htmlFor="uploadedBy" className="block text-lg text-black font-semibold">
-            Uploaded By
+        <div className="flex flex-col space-y-2">
+          <label
+            htmlFor="university"
+            className="block text-lg text-black font-semibold"
+          >
+            University
           </label>
-          <input
-            type="text"
-            name="uploadedBy"
-            id="uploadedBy"
-            value={formData.uploadedBy}
+          <select
+            name="university"
+            id="university"
+            value={formData.university}
             onChange={changeHandler}
-            placeholder="Enter Your Name"
             className="p-3 rounded-md bg-white text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
-          />
-        </div> */}
+          >
+            <option value="">Select University</option>
+            {UniversitiesList.map((university, index) => (
+              <option key={index} value={university.fullName}>
+                {university.fullName}
+              </option>
+            ))}
+          </select>
+        </div>
 
         <div className="flex flex-col space-y-2">
           <label

@@ -8,7 +8,6 @@ import axios from "axios";
 import { data } from "../assets/Suggestions";
 
 const SubjectPage = () => {
-  const [university, setUniversity] = useState("");
   const [relatedSubjects, setRelatedSubjects] = useState([]);
   const [mostSearchedSubs, setMostSearchedSubs] = useState([]);
   const [allData, setAllData] = useState([]); // Store all documents
@@ -30,6 +29,18 @@ const SubjectPage = () => {
     setDataToRender(filteredData);
   };
 
+  const filterUniversityHandler = (e) => {
+    const selectedUniversity = e.target.value;
+    console.log(selectedUniversity);
+
+    const filteredData =
+      selectedUniversity === "Select University"
+        ? allData
+        : allData.filter((doc) => doc.university === selectedUniversity);
+
+    setDataToRender(filteredData);
+  };
+
   // Fetch data from backend
   const fetchData = async () => {
     try {
@@ -37,12 +48,9 @@ const SubjectPage = () => {
         "http://localhost:5000/api/v1/documents/search",
         {
           params: { course, subject },
-          withCredentials: true
+          withCredentials: true,
         }
       );
-
-      console.log(response.data);
-      
 
       setAllData(response.data); // Store all documents
       setDataToRender(response.data); // Initially render all documents
@@ -61,6 +69,11 @@ const SubjectPage = () => {
   const searchedSubsList = () => {
     const list = data.find((item) => item.degree === course)?.subjects || [];
     setMostSearchedSubs(list.slice(0, 3));
+  };
+
+  const handleOpenPdf = (url) => {
+    // Opens the PDF in a new tab
+    window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   useEffect(() => {
@@ -93,7 +106,7 @@ const SubjectPage = () => {
             <select
               name="universities"
               id="universities"
-              onChange={(e) => setUniversity(e.target.value)}
+              onChange={filterUniversityHandler}
               className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500"
             >
               <option>Select University</option>
@@ -124,7 +137,9 @@ const SubjectPage = () => {
             {mostSearchedSubs.map((item, index) => (
               <NavLink
                 key={index}
-                to={`/search?course=${course}&subject=${encodeURIComponent(item)}`}
+                to={`/search?course=${course}&subject=${encodeURIComponent(
+                  item
+                )}`}
               >
                 <li>{item}</li>
               </NavLink>
@@ -139,7 +154,9 @@ const SubjectPage = () => {
               {relatedSubjects.map((item, index) => (
                 <NavLink
                   key={index}
-                  to={`/search?course=${course}&subject=${encodeURIComponent(item)}`}
+                  to={`/search?course=${course}&subject=${encodeURIComponent(
+                    item
+                  )}`}
                 >
                   <div className="flex items-center justify-between p-4 border border-gray-300 rounded-lg shadow hover:bg-gray-100 transition duration-200">
                     <div className="flex items-center">
@@ -158,13 +175,25 @@ const SubjectPage = () => {
               dataToRender.map((doc, index) => (
                 <div
                   key={index}
-                  className="flex items-center p-4 border border-gray-300 rounded-lg shadow hover:bg-gray-100 transition duration-200"
+                  className="flex items-center justify-between p-4 border border-gray-300 rounded-lg shadow hover:bg-gray-100 transition duration-200"
                 >
-                  <FaBook size={40} className="text-blue-500 mr-4" />
-                  <div className="flex flex-col">
-                    <span className="font-medium">{doc.title}</span>
-                    <span className="text-sm text-gray-500">{doc.uploadedBy}</span>
+                  <div className="flex items-center">
+                    <FaBook size={40} className="text-blue-500 mr-4" />
+                    <div className="flex flex-col">
+                      <span className="font-medium">{doc.title}</span>
+                      <span className="text-sm text-gray-500">
+                        {doc.uploadedBy}
+                      </span>
+                    </div>
                   </div>
+
+                  {/* Button to open PDF in a new tab */}
+                  <button
+                    onClick={() => handleOpenPdf(doc.url)} // Call handler to open PDF
+                    className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
+                  >
+                    Open PDF
+                  </button>
                 </div>
               ))
             ) : (

@@ -11,7 +11,7 @@ const LoginForm = () => {
     password: "",
     rememberMe: false,
   });
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const changeHandler = (event) => {
     const { name, value, type, checked } = event.target;
@@ -36,13 +36,9 @@ const LoginForm = () => {
       { withCredentials: true }
     );
 
-    const token = res.headers['authorization']; // or response.headers.get('Authorization')
-
-    console.log('Token:', token);
-
     if (res.data.status === "ok") {
       toast.success("Login Successfull");
-      navigate('/')
+      navigate("/");
     } else {
       toast.error(res.data.message);
     }
