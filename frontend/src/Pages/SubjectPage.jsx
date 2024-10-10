@@ -6,6 +6,9 @@ import { UniversitiesList } from "../assets/UniversitiesList";
 import { FaBook } from "react-icons/fa";
 import axios from "axios";
 import { data } from "../assets/Suggestions";
+// import { toast } from "react-toastify";
+import Cookies from "js-cookie";
+import toast, { Toaster } from 'react-hot-toast';
 
 const SubjectPage = () => {
   const [relatedSubjects, setRelatedSubjects] = useState([]);
@@ -73,7 +76,12 @@ const SubjectPage = () => {
 
   const handleOpenPdf = (url) => {
     // Opens the PDF in a new tab
-    window.open(url, '_blank', 'noopener,noreferrer');
+    const user = Cookies.get("userid");
+    if (user) {
+      window.open(url, "_blank", "noopener,noreferrer");
+    } else {
+      toast.error("Login to view the PDF File");
+    }
   };
 
   useEffect(() => {
@@ -84,6 +92,9 @@ const SubjectPage = () => {
 
   return (
     <div className="min-h-screen">
+
+    <Toaster/>
+
       <NavBar />
 
       <div className="flex items-center justify-center mb-6 mt-6 min-w-full">
@@ -141,7 +152,7 @@ const SubjectPage = () => {
                   item
                 )}`}
               >
-                <li>{item}</li>
+                <li className="hover:text-blue-500 hover:underline">{item}</li>
               </NavLink>
             ))}
           </ul>
