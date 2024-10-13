@@ -6,15 +6,17 @@ import { UniversitiesList } from "../assets/UniversitiesList";
 import { FaBook } from "react-icons/fa";
 import axios from "axios";
 import { data } from "../assets/Suggestions";
-// import { toast } from "react-toastify";
 import Cookies from "js-cookie";
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from "react-hot-toast";
+import Dialog from "@mui/material/Dialog"; // Material UI Dialog component
+import LoginForm from "../Components/LoginForm"; // Assuming you have a LoginForm component
 
 const SubjectPage = () => {
   const [relatedSubjects, setRelatedSubjects] = useState([]);
   const [mostSearchedSubs, setMostSearchedSubs] = useState([]);
   const [allData, setAllData] = useState([]); // Store all documents
   const [dataToRender, setDataToRender] = useState([]); // Store filtered documents
+  const [openLoginDialog, setOpenLoginDialog] = useState(false); // State for login dialog
   const location = useLocation();
 
   const queryParams = new URLSearchParams(location.search);
@@ -34,8 +36,6 @@ const SubjectPage = () => {
 
   const filterUniversityHandler = (e) => {
     const selectedUniversity = e.target.value;
-    console.log(selectedUniversity);
-
     const filteredData =
       selectedUniversity === "Select University"
         ? allData
@@ -75,14 +75,18 @@ const SubjectPage = () => {
   };
 
   const handleOpenPdf = (url) => {
-    // Opens the PDF in a new tab
     const user = Cookies.get("userid");
     if (user) {
       window.open(url, "_blank", "noopener,noreferrer");
     } else {
-      toast.error("Login to view the PDF File");
+      setOpenLoginDialog(true); // Open the login dialog
     }
   };
+
+  const handleCloseDialog = () => {
+    setOpenLoginDialog(false);
+  };
+
 
   useEffect(() => {
     fetchData();
@@ -92,8 +96,7 @@ const SubjectPage = () => {
 
   return (
     <div className="min-h-screen">
-
-    <Toaster/>
+      <Toaster />
 
       <NavBar />
 
@@ -213,6 +216,11 @@ const SubjectPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Dialog for LoginForm */}
+      <Dialog open={openLoginDialog} onClose={handleCloseDialog}>
+        <LoginForm onClose={handleCloseDialog} />
+      </Dialog>
     </div>
   );
 };

@@ -4,7 +4,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const LoginForm = () => {
+const LoginForm = ({ onClose, onLoginSuccess }) => {
   const [showPass, setShowPass] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
