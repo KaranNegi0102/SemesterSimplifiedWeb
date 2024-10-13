@@ -102,7 +102,7 @@ const getUserInfo = async (req, res) => {
   const userID = req.user.id;
 
   try {
-    const user = await User.findById(userID);
+    const user = await User.findById(userID).populate("materialUploaded", "title url uploadedAt");    
 
     res.json({
       status: "ok",
@@ -110,6 +110,7 @@ const getUserInfo = async (req, res) => {
         name: user.name,
         email: user.email,
         university: user.university,
+        uploads:user.materialUploaded
       },
     });
   } catch (error) {

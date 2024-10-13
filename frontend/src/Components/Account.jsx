@@ -3,45 +3,17 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { UniversitiesList } from "../assets/UniversitiesList"; // Make sure the path is correct
 
-const Profile = () => {
+const Account = ({ userDetails }) => {
   const [showPass, setShowPass] = useState(false);
   const [confirmPass, setConfirmPass] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [updateLoading, setUpdateLoading] = useState(false);
-  const [updateSuccess, setUpdateSuccess] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
+    name: userDetails?.name || "",
+    email: userDetails?.email || "",
+    university: userDetails?.university || "",
     password: "",
     confirmPass: "",
-    university: "",
   });
-
-  // Fetch user info from backend
-  const getUserInfo = async () => {
-    setLoading(true);
-    try {
-      const res = await axios.get("http://localhost:5000/api/v1/user/getInfo", {
-        withCredentials: true,
-      });
-      const user = res.data.user;
-
-      setFormData({
-        name: user.name || "",
-        email: user.email || "",
-        university: user.university || "",
-        password: "",
-        confirmPass: "",
-      });
-    } catch (error) {
-      console.error("Error fetching user info:", error);
-      toast.error(
-        error.response?.data?.message || "Failed to fetch user information."
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
 
   // Handle input changes
   const changeHandler = (event) => {
@@ -63,8 +35,7 @@ const Profile = () => {
         return;
       }
     }
-
-    setUpdateLoading(true);
+    
     try {
       const payload = {
         name: formData.name,
@@ -77,7 +48,7 @@ const Profile = () => {
         payload.password = formData.password;
       }
 
-      const res = await axios.post(
+      await axios.post(
         "http://localhost:5000/api/v1/user/updateUser",
         payload,
         {
@@ -85,11 +56,8 @@ const Profile = () => {
         }
       );
 
-      console.log("User updated successfully:", res.data);
+      // console.log("User updated successfully:", res.data);
       toast.success("Profile updated successfully!");
-      setUpdateSuccess(true);
-
-      // Optionally, navigate to another page or refetch user info
     } catch (error) {
       console.error("Error updating user info:", error);
       toast.error(error.response?.data?.message || "Error updating profile!");
@@ -99,17 +67,24 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    getUserInfo();
-  }, [updateSuccess]);
+    if (userDetails) {
+      setFormData((prevData) => ({
+        ...prevData,
+        name: userDetails.username || "",
+        email: userDetails.email || "",
+        university: userDetails.university || "",
+      }));
+    }
+  }, [userDetails]);
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-2xl font-semibold mb-6 text-center">Profile</h2>
+        <h2 className="text-2xl font-semibold mb-6 text-center">
+          Update Profile Details
+        </h2>
 
-        {loading ? (
-          <p className="text-center text-gray-500">Loading...</p>
-        ) : (
+        {
           <form onSubmit={updateHandler} className="space-y-4">
             {/* Name Field */}
             <div>
@@ -232,21 +207,20 @@ const Profile = () => {
             <div>
               <button
                 type="submit"
-                disabled={updateLoading}
                 className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
                   updateLoading
                     ? "bg-gray-400 cursor-not-allowed"
                     : "bg-blue-600 hover:bg-blue-700"
                 } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
               >
-                {updateLoading ? "Updating..." : "Update Profile"}
+                {updateLoading ? "Updating..." : "Update"}
               </button>
             </div>
           </form>
-        )}
+        }
       </div>
     </div>
   );
 };
 
-export default Profile;
+export default Account;
