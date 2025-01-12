@@ -63,6 +63,9 @@ const CursorPointer = () => {
 
   return (
     <div className="relative w-screen h-screen bg-gray-100 overflow-hidden">
+      <div>
+        <h1>hello</h1>
+      </div>
       {/* Smooth cursor */}
       <div
         className="absolute rounded-full pointer-events-none"
