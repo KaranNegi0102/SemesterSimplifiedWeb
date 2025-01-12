@@ -33,12 +33,14 @@ app.use(cookieParser());
 
 dbConnection();
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
-
 app.use("/api/v1", routes);
 
 app.get("/", (req, res) => {
   res.send(`<h1>This is default route</h1>`);
 });
+
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+

@@ -24,8 +24,8 @@ const registerUser = async (req, res) => {
     const user = await User.create({
       name,
       email,
-      password: hashedPassword,
-      university: university || null,
+      password,
+      university: university || "",
       role: role || "student", // Optionally set a default role
     });
 
@@ -46,8 +46,7 @@ const registerUser = async (req, res) => {
         role: user.role,
       },
     });
-  } 
-  catch (error) {
+  } catch (error) {
     console.error("Error while registering:", error);
     res.status(500).json({
       message: "Error while registering.",
@@ -57,7 +56,7 @@ const registerUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   const { email, password, rememberMe } = req.body;
-
+  console.log(password);
   try {
     const user = await User.findOne({ email });
 
@@ -66,8 +65,12 @@ const loginUser = async (req, res) => {
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
+    console.log(isMatch);
+    console.log(password);
+    console.log(user.password);
+    
 
-    if (isMatch) {
+    if (!isMatch) {
       const payload = {
         email: user.email,
         role: user.role,
