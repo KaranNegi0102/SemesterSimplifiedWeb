@@ -50,7 +50,7 @@ const CursorPointer = () => {
             ...particle,
             x: particle.x + (Math.random() - 0.5) * 2, // Random horizontal movement
             y: particle.y + (Math.random() - 0.5) * 2, // Random vertical movement
-            life: particle.life - 0.02, // Fade out over time
+            life: particle.life - 0.1, // Fade out over time
           }))
           .filter((particle) => particle.life > 0) // Remove particles that are fully faded
       );
@@ -62,25 +62,22 @@ const CursorPointer = () => {
   }, []);
 
   return (
-    <div className="relative w-screen h-screen bg-gray-100 overflow-hidden">
-      <div>
-        <h1>hello</h1>
-      </div>
-      {/* Smooth cursor */}
+    <div className=" overflow-hidden">
+      {/* Cursor */}
       <div
         className="absolute rounded-full pointer-events-none"
         style={{
           left: smoothPosition.x,
           top: smoothPosition.y,
-          width: "40px", // Increased size
-          height: "40px", // Increased size
-          backgroundColor: "rgba(0, 0, 255, 0.3)", // Semi-transparent blue
-          border: "2px solid blue", // Border for better visibility
+          width: "10px",
+          height: "10px",
+          backgroundColor: "black",
           transform: "translate(-50%, -50%)",
-          transition: "transform 0.1s ease-out",
-          boxShadow: "0 0 10px rgba(0, 0, 255, 0.5)", // Glow effect
+          transition: "all 0.1s ease-out",
         }}
-      />
+      />  
+      
+
 
       {/* Particles */}
       {particles.map((particle) => (

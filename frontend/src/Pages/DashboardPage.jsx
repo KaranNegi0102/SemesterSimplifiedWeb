@@ -4,6 +4,7 @@ import Account from "../Components/Account";
 import Uploads from "../Components/Uploads";
 import Connections from "../Components/Connections";
 import SidePanel from "../Components/SidePanel";
+import CursorPointer from "../Components/CPT";
 
 const DashboardPage = () => {
   const [activeTab, setActiveTab] = useState("Account");
@@ -48,7 +49,7 @@ const DashboardPage = () => {
   }, []);
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex  h-screen bg-gray-100">
       <SidePanel
         activeTab={activeTab}
         setActiveTab={setActiveTab}

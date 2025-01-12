@@ -5,11 +5,12 @@ import RegisterPage from "./Pages/RegisterPage";
 import SubjectPage from "./Pages/SubjectPage";
 import UploadPage from "./Pages/UploadPage";
 import DashboardPage from "./Pages/DashboardPage";
-import CursorPointerTesting from "./Pages/CursorPointerTesting";
+import CursorPointerTesting from "./Components/CPT";
 
 function App() {
   return (
     <div>
+    
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />

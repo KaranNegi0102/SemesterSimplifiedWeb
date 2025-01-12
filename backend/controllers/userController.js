@@ -24,7 +24,7 @@ const registerUser = async (req, res) => {
     const user = await User.create({
       name,
       email,
-      password,
+      password: hashedPassword,
       university: university || "",
       role: role || "student", // Optionally set a default role
     });
@@ -56,21 +56,22 @@ const registerUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   const { email, password, rememberMe } = req.body;
-  console.log(password);
+  console.log("1 st password what i wrote",password);
   try {
     const user = await User.findOne({ email });
+    console.log("checking whether am getting the user or not",user);
 
     if (!user) {
       return res.status(404).json({ message: "User does not exist." });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    console.log(isMatch);
-    console.log(password);
-    console.log(user.password);
+    console.log("checking the password  ",isMatch);
+    console.log("this is the password i wrote",password);
+    console.log("this is the password stored in my db",user.password);
     
 
-    if (!isMatch) {
+    if (isMatch) {
       const payload = {
         email: user.email,
         role: user.role,
