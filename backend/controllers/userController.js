@@ -2,6 +2,8 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken"); // Ensure you have this installed
+const {sendEmail} = require("../connections/emailService")
+
 require("dotenv").config();
 
 const registerUser = async (req, res) => {
@@ -29,6 +31,36 @@ const registerUser = async (req, res) => {
       role: role || "student", // Optionally set a default role
     });
 
+    // Send an email to the user wala config
+    const subject = "Welcome to Semester Simplified!";
+    const text = `Hello ${user.name},
+
+Welcome to Semester Simplified! We're excited to have you on board.
+
+Your email address is: ${user.email}
+Your password is: ${password}
+
+You can now explore the platform to find and upload university notes.
+
+Best regards,  
+The Semester Simplified Team`;
+
+    try{
+      await sendEmail(user.email,subject,text,
+        `<h1>Welcome, ${name}!</h1>
+        <p>Thank you for creating an account with Semester Simplified! We’re thrilled to have you on board.</p>
+        <p>You can now explore the platform to find and upload university notes.</p>
+        <p>Best regards,</p>
+        <p><strong>The Semester Simplified Team</strong></p>`
+      );
+
+    }catch(emailError){
+      console.error("Email sending failed:", emailError.message);
+
+
+    }
+    
+
     // Optionally, create a JWT token upon registration
     const token = jwt.sign(
       { userId: user._id, email: user.email },
@@ -45,6 +77,7 @@ const registerUser = async (req, res) => {
         university: user.university,
         role: user.role,
       },
+      token
     });
   } catch (error) {
     console.error("Error while registering:", error);
