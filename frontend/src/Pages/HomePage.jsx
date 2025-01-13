@@ -20,8 +20,7 @@ const HomePage = () => {
 
   return (
     <div className="relative flex flex-col min-h-screen w-full">
-      {/* Cursor Pointer */}
-      <CursorPointer />
+     
 
       {/* Navigation Bar */}
       <NavBar />
@@ -67,7 +66,8 @@ const HomePage = () => {
         </div>
 
         {/* Courses Listed */}
-        <div className="flex-col items-center justify-center max-w-full bg-[#F5F5F5] transition-colors duration-300 hover:bg-[#e5e5e5]">
+        <div className="flex-col items-center justify-center max-w-full">
+         
           <h2 className="text-center text-3xl font-bold pt-5">
             Courses Listed
           </h2>
@@ -79,10 +79,12 @@ const HomePage = () => {
         </div>
       </main>
 
-      <div className="bg-[#F5F5F5]">
+      <div >
         {/* Footer */}
         <Footer />
       </div>
+       {/* Cursor Pointer */}
+       <CursorPointer />
     </div>
   );
 };

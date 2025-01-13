@@ -8,7 +8,7 @@ const LoginPage = () => {
       {/* Wrapper to center the form and image */}
       <div className="flex flex-1 items-center justify-center">
         {/* Form section with fade-in animation */}
-        <div className="w-1/2 flex justify-center animate-fadeInLeft transform scale-100 hover:scale-110 focus:scale-125 transition-transform duration-500">
+        <div className="w-1/2 flex justify-center ">
           <LoginForm />
         </div>
 
@@ -17,8 +17,8 @@ const LoginPage = () => {
           <img
             src={mainLogo}
             alt="Logo"
-            height={643}
-            width={635}
+            height={400}
+            width={400}
             className="rounded-full transform scale-100 hover:scale-110 transition-transform duration-500"
           />
         </div>

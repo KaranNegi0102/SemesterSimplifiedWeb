@@ -62,28 +62,13 @@ const CursorPointer = () => {
   }, []);
 
   return (
-    <div className=" overflow-hidden">
-      {/* Cursor */}
-      <div
-        className="absolute rounded-full pointer-events-none"
-        style={{
-          left: smoothPosition.x,
-          top: smoothPosition.y,
-          width: "10px",
-          height: "10px",
-          backgroundColor: "black",
-          transform: "translate(-50%, -50%)",
-          transition: "all 0.1s ease-out",
-        }}
-      />  
-      
-
+    <div className="">
 
       {/* Particles */}
       {particles.map((particle) => (
         <div
           key={particle.id}
-          className="absolute rounded-full pointer-events-none"
+          className="absolute w-full h-full rounded-full pointer-events-none"
           style={{
             left: particle.x,
             top: particle.y,

@@ -10,7 +10,7 @@ import Cookies from "js-cookie";
 import { Toaster } from "react-hot-toast";
 import Dialog from "@mui/material/Dialog"; // Material UI Dialog component
 import LoginForm from "../Components/LoginForm"; // Assuming you have a LoginForm component
-
+import { useNavigate } from "react-router-dom";
 const SubjectPage = () => {
   const [relatedSubjects, setRelatedSubjects] = useState([]);
   const [mostSearchedSubs, setMostSearchedSubs] = useState([]);
@@ -18,7 +18,7 @@ const SubjectPage = () => {
   const [dataToRender, setDataToRender] = useState([]); // Store filtered documents
   const [openLoginDialog, setOpenLoginDialog] = useState(false); // State for login dialog
   const location = useLocation();
-
+  const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const course = queryParams.get("course");
   const subject = queryParams.get("subject");
@@ -101,8 +101,16 @@ const SubjectPage = () => {
       <NavBar />
 
       <div className="flex items-center justify-center mb-6 mt-6 min-w-full">
-        <div className="w-full md:w-2/3 lg:w-1/2">
+        <div className="w-full ml-[20%] flex items-center justify-between">
           <AutoSuggestSearch />
+          <button 
+      className="bg-blue-500 hover:bg-blue-700 text-xl mr-40 text-white font-bold py-2 px-4 rounded"
+      onClick={() => {
+        navigate("/upload");
+      }}
+      >
+        + Upload Your Files
+      </button>
         </div>
       </div>
 

@@ -18,15 +18,15 @@ const RegisterForm = () => {
     terms: false,
   });
 
-  const changeHandler = (event) => {
-    const { name, type, checked, value } = event.target;
+  const handleChange = (event) => {
+    const { name, type, value, checked } = event.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: type === "checkbox" ? checked : value,
     }));
   };
 
-  const submitHandler = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
@@ -40,17 +40,14 @@ const RegisterForm = () => {
     }
 
     try {
-      const res = await axios.post(
-        "http://localhost:5000/api/v1/user/register",
-        {
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-        }
-      );
-      if (res.data.status === "ok") {
-        toast.success("User Created Successfully!");
-        console.log(res.data.user);
+      const response = await axios.post("http://localhost:5000/api/v1/user/register", {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (response.data.status === "ok") {
+        toast.success("User created successfully!");
         setFormData({
           name: "",
           email: "",
@@ -69,19 +66,18 @@ const RegisterForm = () => {
 
   return (
     <form
-      onSubmit={submitHandler}
-      className="bg-[#F5F5F5] p-6 rounded-lg w-full max-w-xl mx-auto space-y-6"
+      onSubmit={handleSubmit}
+      className="bg-gray-50 p-3 rounded-lg w-full max-w-sm mx-auto shadow-sm space-y-4"
     >
-      <div className="text-left mb-6">
-        <h1 className="text-3xl font-bold text-black text-center">REGISTER</h1>
+      {/* Form Header */}
+      <div className="text-center mb-4">
+        <h1 className="text-xl font-bold text-gray-800">Register</h1>
       </div>
 
-      <div className="flex flex-col space-y-2">
-        <label
-          htmlFor="name"
-          className=" text-lg text-black font-semibold flex items-center"
-        >
-          <IoPersonSharp className="mr-2" />
+      {/* Name Input */}
+      <div className="space-y-1">
+        <label htmlFor="name" className="flex items-center text-sm font-semibold text-gray-700">
+          <IoPersonSharp className="mr-2 text-lg" />
           Name
         </label>
         <input
@@ -89,18 +85,16 @@ const RegisterForm = () => {
           name="name"
           id="name"
           value={formData.name}
-          placeholder="Enter Name"
-          onChange={changeHandler}
-          className="p-3 rounded-md bg-white text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter your name"
+          onChange={handleChange}
+          className="p-2 text-sm rounded-md w-full bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
 
-      <div className="flex flex-col space-y-2">
-        <label
-          htmlFor="email"
-          className=" text-lg text-black font-semibold flex items-center"
-        >
-          <IoIosMail className="mr-2" />
+      {/* Email Input */}
+      <div className="space-y-1">
+        <label htmlFor="email" className="flex items-center text-sm font-semibold text-gray-700">
+          <IoIosMail className="mr-2 text-lg" />
           Email
         </label>
         <input
@@ -108,18 +102,16 @@ const RegisterForm = () => {
           name="email"
           id="email"
           value={formData.email}
-          placeholder="Enter Email"
-          onChange={changeHandler}
-          className="p-3 rounded-md bg-white text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter your email"
+          onChange={handleChange}
+          className="p-2 text-sm rounded-md w-full bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
 
-      <div className="flex flex-col space-y-2">
-        <label
-          htmlFor="password"
-          className=" text-lg text-black font-semibold flex items-center"
-        >
-          <FaLock className="mr-2" />
+      {/* Password Input */}
+      <div className="space-y-1">
+        <label htmlFor="password" className="flex items-center text-sm font-semibold text-gray-700">
+          <FaLock className="mr-2 text-lg" />
           Password
         </label>
         <div className="relative">
@@ -129,8 +121,8 @@ const RegisterForm = () => {
             id="password"
             value={formData.password}
             placeholder="••••••••"
-            onChange={changeHandler}
-            className="p-3 rounded-md bg-white text-black border border-gray-300 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onChange={handleChange}
+            className="p-2 text-sm rounded-md w-full bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           {showPass ? (
             <FaEyeSlash
@@ -146,12 +138,10 @@ const RegisterForm = () => {
         </div>
       </div>
 
-      <div className="flex flex-col space-y-2">
-        <label
-          htmlFor="confirmPassword"
-          className=" text-lg text-black font-semibold flex items-center"
-        >
-          <FaKey className="mr-2" />
+      {/* Confirm Password Input */}
+      <div className="space-y-1">
+        <label htmlFor="confirmPassword" className="flex items-center text-sm font-semibold text-gray-700">
+          <FaKey className="mr-2 text-lg" />
           Confirm Password
         </label>
         <div className="relative">
@@ -161,8 +151,8 @@ const RegisterForm = () => {
             id="confirmPassword"
             value={formData.confirmPassword}
             placeholder="••••••••"
-            onChange={changeHandler}
-            className="p-3 rounded-md bg-white text-black border border-gray-300 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onChange={handleChange}
+            className="p-2 text-sm rounded-md w-full bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           {showConfirmPass ? (
             <FaEyeSlash
@@ -178,31 +168,33 @@ const RegisterForm = () => {
         </div>
       </div>
 
+      {/* Terms and Conditions */}
       <div className="flex items-center space-x-2">
         <input
           type="checkbox"
           id="terms"
           name="terms"
-          className="h-4 w-4 text-blue-600 bg-gray-700 border border-gray-600 rounded"
           checked={formData.terms}
-          onChange={changeHandler}
+          onChange={handleChange}
+          className="h-4 w-4 text-blue-600 border-gray-300 rounded"
         />
-        <label htmlFor="terms" className="text-black text-sm">
-          I agree to all statements in the Terms of Service
+        <label htmlFor="terms" className="text-sm text-gray-700">
+          I agree to the <span className="text-blue-600 cursor-pointer">Terms of Service</span>.
         </label>
       </div>
 
+      {/* Submit Button */}
       <div>
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white font-semibold py-3 rounded-md hover:bg-blue-700 transition-colors duration-200"
+          className="w-full bg-blue-600 text-white font-semibold py-2 rounded-md hover:bg-blue-700 transition-colors text-sm"
         >
           Register
         </button>
-        <p className="text-center text-black">
-          Already Have an Account?{" "}
-          <NavLink to="/login">
-            <span className="text-blue-600">Log In</span>
+        <p className="text-center text-gray-700 mt-3 text-sm">
+          Already have an account?{" "}
+          <NavLink to="/login" className="text-blue-600">
+            Log In
           </NavLink>
         </p>
       </div>

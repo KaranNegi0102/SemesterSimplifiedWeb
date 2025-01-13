@@ -35,15 +35,15 @@ const registerUser = async (req, res) => {
     const subject = "Welcome to Semester Simplified!";
     const text = `Hello ${user.name},
 
-Welcome to Semester Simplified! We're excited to have you on board.
+          Welcome to Semester Simplified! We're excited to have you on board.
 
-Your email address is: ${user.email}
-Your password is: ${password}
+          Your email address is: ${user.email}
+          Your password is: ${password}
 
-You can now explore the platform to find and upload university notes.
+          You can now explore the platform to find and upload university notes.
 
-Best regards,  
-The Semester Simplified Team`;
+          Best regards,  
+          The Semester Simplified Team`;
 
     try{
       await sendEmail(user.email,subject,text,
